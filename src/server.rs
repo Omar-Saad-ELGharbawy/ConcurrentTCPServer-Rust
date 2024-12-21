@@ -23,24 +23,83 @@ impl Client {
 
     pub fn handle(&mut self) -> io::Result<()> {
         let mut buffer = [0; 512];
+
         // Read data from the client
-        let bytes_read = self.stream.read(&mut buffer)?;
-        if bytes_read == 0 {
-            info!("Client disconnected.");
-            return Ok(());
+
+        // Use a match to handle non-blocking I/O on Windows
+        match self.stream.read(&mut buffer) {
+            Ok(0) => {
+                /*
+                If the client has disconnected (read returned 0 bytes), we now return an error so the server loop breaks.
+                Previously, we returned Ok(()), which caused an infinite loop because the server kept calling client.handle() indefinitely.
+                */
+                info!("Buffer is Empty.");
+                
+                // Return an Err(...) so the server's inner loop sees an error and breaks out instead of continuing forever.
+                return Err(io::Error::new(
+                    io::ErrorKind::ConnectionAborted,
+                    "Client disconnected",
+                ));
+                // Old Code
+                // return Ok(());
+            }
+            // We successfully read 'n' bytes, attempt to decode
+            Ok(bytes_read) => {
+                if let Ok(message) = EchoMessage::decode(&buffer[..bytes_read]) {
+                    info!("Received: {}", message.content);
+                    // Echo back the message
+                    let payload = message.encode_to_vec();
+                    self.stream.write_all(&payload)?;
+                    self.stream.flush()?;
+                } else {
+                    error!("Failed to decode message");
+                }
+
+                Ok(())
+            }
+            // If the socket would block, it means no data is ready yet.
+            // This is NOT a fatal error on a non-blocking socket.
+            Err(ref e) if e.kind() == ErrorKind::WouldBlock => {
+                // No data available yet
+                info!("No data available yet.");
+                // Return Ok(()) so the server can try again later
+                return Ok(());
+            }
+            Err(e) => {
+                error!("Failed to read from client: {}", e);
+                return Err(e);
+            }
         }
 
-        if let Ok(message) = EchoMessage::decode(&buffer[..bytes_read]) {
-            info!("Received: {}", message.content);
-            // Echo back the message
-            let payload = message.encode_to_vec();
-            self.stream.write_all(&payload)?;
-            self.stream.flush()?;
-        } else {
-            error!("Failed to decode message");
-        }
+        // Read data from the client
+        /*
+        If the client has disconnected (read returned 0 bytes), we now return an error so the server loop breaks.
+        Previously, we returned Ok(()), which caused an infinite loop because the server kept calling client.handle() indefinitely.
+        */
 
-        Ok(())
+        // let bytes_read = self.stream.read(&mut buffer)?;
+        // if bytes_read == 0 {
+        //     info!("Client disconnected.");
+        //     // Return an Err(...) so the server's inner loop sees an error and breaks out instead of continuing forever.
+        //     return Err(io::Error::new(
+        //         io::ErrorKind::ConnectionAborted,
+        //         "Client disconnected",
+        //     ));
+        //     // Old Code
+        //     // return Ok(());
+        // }
+
+        // if let Ok(message) = EchoMessage::decode(&buffer[..bytes_read]) {
+        //     info!("Received: {}", message.content);
+        //     // Echo back the message
+        //     let payload = message.encode_to_vec();
+        //     self.stream.write_all(&payload)?;
+        //     self.stream.flush()?;
+        // } else {
+        //     error!("Failed to decode message");
+        // }
+
+        // Ok(())
     }
 }
 
@@ -69,6 +128,7 @@ impl Server {
         self.listener.set_nonblocking(true)?;
 
         while self.is_running.load(Ordering::SeqCst) {
+            info!("Listening for new clients");
             match self.listener.accept() {
                 Ok((stream, addr)) => {
                     info!("New client connected: {}", addr);
@@ -76,10 +136,23 @@ impl Server {
                     // Handle the client request
                     let mut client = Client::new(stream);
                     while self.is_running.load(Ordering::SeqCst) {
+                        //make match if e is Client disconnected make info Client disconnected and break else make error e
                         if let Err(e) = client.handle() {
-                            error!("Error handling client: {}", e);
-                            break;
+                            match e.kind() {
+                                ErrorKind::ConnectionAborted => {
+                                    info!("Client disconnected.");
+                                    break;
+                                }
+                                _ => {
+                                    error!("Error handling client: {}", e);
+                                    break;
+                                }
+                            }
                         }
+                        // if let Err(e) = client.handle() {
+                        //     error!("Error handling client: {}", e);
+                        //     break;
+                        // }
                     }
                 }
                 Err(ref e) if e.kind() == ErrorKind::WouldBlock => {

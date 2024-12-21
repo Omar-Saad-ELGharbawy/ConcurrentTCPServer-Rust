@@ -57,7 +57,8 @@ impl Client {
             stream.shutdown(std::net::Shutdown::Both)?;
         }
 
-        println!("Disconnected from the server!");
+        // println!("Disconnected from the server!");
+        info!("Disconnected from the server.");
         Ok(())
     }
 

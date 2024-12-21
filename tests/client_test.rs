@@ -6,6 +6,8 @@ use std::{
     sync::Arc,
     thread::{self, JoinHandle},
 };
+// use log::{error, info, warn};
+use log::trace;
 
 mod client;
 
@@ -24,6 +26,8 @@ fn test_client_connection() {
     // activate logging
     let _ = env_logger::try_init();
 
+    trace!("1 : test_client_connection Start.");
+
     // Set up the server in a separate thread
     let server = create_server();
     let handle = setup_server_thread(server.clone());
@@ -38,8 +42,15 @@ fn test_client_connection() {
         "Failed to disconnect from the server"
     );
 
+    trace!("Client Disconnected from the server.");
+
+    // // sleep for one second nd
+    // thread::sleep(std::time::Duration::from_secs(1));
+
     // Stop the server and wait for thread to finish
+    trace!("Stop the server.");
     server.stop();
+    trace!("Waiting for Server to End.");
     assert!(
         handle.join().is_ok(),
         "Server thread panicked or failed to join"
@@ -50,7 +61,8 @@ fn test_client_connection() {
 fn test_client_echo_message() {
     // activate logging
     let _ = env_logger::try_init();
-    
+    trace!("2 : test_client_echo_message Start.");
+
     // Set up the server in a separate thread
     let server = create_server();
     let handle = setup_server_thread(server.clone());
@@ -69,6 +81,8 @@ fn test_client_echo_message() {
 
     // Receive the echoed message
     let response = client.receive();
+    trace!("Server responded with: {:?}", response);
+
     assert!(
         response.is_ok(),
         "Failed to receive response for EchoMessage"
@@ -99,7 +113,7 @@ fn test_client_echo_message() {
 }
 
 #[test]
-#[ignore = "please remove ignore and fix this test"]
+// #[ignore = "please remove ignore and fix this test"]
 fn test_multiple_echo_messages() {
     // Set up the server in a separate thread
     let server = create_server();
