@@ -21,6 +21,9 @@ fn create_server() -> Arc<Server> {
 
 #[test]
 fn test_client_connection() {
+    // activate logging
+    let _ = env_logger::try_init();
+
     // Set up the server in a separate thread
     let server = create_server();
     let handle = setup_server_thread(server.clone());
@@ -45,6 +48,9 @@ fn test_client_connection() {
 
 #[test]
 fn test_client_echo_message() {
+    // activate logging
+    let _ = env_logger::try_init();
+    
     // Set up the server in a separate thread
     let server = create_server();
     let handle = setup_server_thread(server.clone());
