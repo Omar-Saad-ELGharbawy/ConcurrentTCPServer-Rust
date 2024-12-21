@@ -22,6 +22,8 @@ fn create_server() -> Arc<Server> {
 }
 
 #[test]
+// #[ignore]
+
 fn test_client_connection() {
     // activate logging
     let _ = env_logger::try_init();
@@ -58,6 +60,7 @@ fn test_client_connection() {
 }
 
 #[test]
+// #[ignore]
 fn test_client_echo_message() {
     // activate logging
     let _ = env_logger::try_init();
@@ -113,8 +116,12 @@ fn test_client_echo_message() {
 }
 
 #[test]
-// #[ignore = "please remove ignore and fix this test"]
+// #[ignore]
 fn test_multiple_echo_messages() {
+    // activate logging
+    let _ = env_logger::try_init();
+    trace!("3 : test_multiple_echo_messages Start.");
+
     // Set up the server in a separate thread
     let server = create_server();
     let handle = setup_server_thread(server.clone());
@@ -129,6 +136,8 @@ fn test_multiple_echo_messages() {
         "How are you?".to_string(),
         "Goodbye!".to_string(),
     ];
+    trace!("Messages will be sent : {:?}", messages);
+    println!("Messages will be sent : {:?}", messages);
 
     // Send and receive multiple messages
     for message_content in messages {
@@ -136,11 +145,15 @@ fn test_multiple_echo_messages() {
         echo_message.content = message_content.clone();
         let message = client_message::Message::EchoMessage(echo_message);
 
+        trace!("Send Message : {:?}", message);
+
         // Send the message to the server
         assert!(client.send(message).is_ok(), "Failed to send message");
 
         // Receive the echoed message
         let response = client.receive();
+        trace!("Server responded with: {:?}", response);
+
         assert!(
             response.is_ok(),
             "Failed to receive response for EchoMessage"
@@ -172,8 +185,12 @@ fn test_multiple_echo_messages() {
 }
 
 #[test]
-#[ignore = "please remove ignore and fix this test"]
+// #[ignore = "please remove ignore and fix this test"]
 fn test_multiple_clients() {
+    // activate logging
+    let _ = env_logger::try_init();
+    trace!("4 : test_multiple_clients Start.");
+
     // Set up the server in a separate thread
     let server = create_server();
     let handle = setup_server_thread(server.clone());
@@ -185,6 +202,7 @@ fn test_multiple_clients() {
         client::Client::new("localhost", 8080, 1000),
     ];
 
+    trace!("Connecting Clients.");
     for client in clients.iter_mut() {
         assert!(client.connect().is_ok(), "Failed to connect to the server");
     }
