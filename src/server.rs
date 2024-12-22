@@ -1,3 +1,16 @@
+//! A single-threaded TCP server implementation that handles multiple client connections using a round-robin approach.
+//! 
+//! This server implementation uses a non-blocking I/O model to handle multiple clients
+//! in a single thread. The server supports two types of messages:
+//! * Echo messages - Returns the received message back to the client
+//! * Add requests - Adds two numbers and returns the result
+//!
+//! # Architecture
+//! * Single main thread handles all client connections
+//! * Non-blocking I/O for both accepting connections and client communication
+//! * Round-robin client handling approach
+//! * Vector-based client management
+
 // use crate::message::EchoMessage;
 use crate::message::{
     client_message,
@@ -20,15 +33,34 @@ use std::{
     time::Duration,
 };
 
+/// Represents a connected client and manages its TCP stream
 struct Client {
+    /// The TCP stream connected to the client
     stream: TcpStream,
 }
 
 impl Client {
+    /// Creates a new Client instance wrapping a TCP stream
+    ///
+    /// # Arguments
+    /// * `stream` - The TCP stream connected to the client
+    ///
+    /// # Returns
+    /// A new Client instance
     pub fn new(stream: TcpStream) -> Self {
         Client { stream }
     }
 
+    /// Handles client communication by reading and processing messages
+    ///
+    /// This method implements the core client handling logic:
+    /// 1. Reads data from the client stream
+    /// 2. Processes different message types (Echo, Add)
+    /// 3. Sends appropriate responses back to the client
+    ///
+    /// # Returns
+    /// * `Ok(())` if message processing was successful or no data was available
+    /// * `Err(...)` if the client disconnected or an error occurred
     pub fn handle(&mut self) -> io::Result<()> {
         let mut buffer = [0; 512];
 
@@ -57,7 +89,7 @@ impl Client {
                 // 1. Decode the data as a `ClientMessage` instead of just `EchoMessage`. (FIXED)
                 match ClientMessage::decode(&buffer[..bytes_read]) {
                     Ok(client_msg) => {
-                        // 2. Match on the `oneof` to see if it’s EchoMessage or AddRequest
+                        // 2. Match on the `oneof` to see if it's EchoMessage or AddRequest
                         match client_msg.message {
                             Some(client_message::Message::EchoMessage(echo)) => {
                                 info!("Received EchoMessage: {}", echo.content);
@@ -116,13 +148,23 @@ impl Client {
     }
 }
 
+/// Main server struct that manages the TCP listener and client connections
 pub struct Server {
+    /// TCP listener for accepting new connections
     listener: TcpListener,
+    /// Flag indicating if the server is running, shared across threads
     is_running: Arc<AtomicBool>,
 }
 
 impl Server {
-    /// Creates a new server instance
+    /// Creates a new server instance bound to the specified address
+    ///
+    /// # Arguments
+    /// * `addr` - The address to bind to (e.g., "localhost:8080")
+    ///
+    /// # Returns
+    /// * `Ok(Server)` if server creation was successful
+    /// * `Err(...)` if binding to the address failed
     pub fn new(addr: &str) -> io::Result<Self> {
         let listener = TcpListener::bind(addr)?;
         let is_running = Arc::new(AtomicBool::new(false));
@@ -133,6 +175,16 @@ impl Server {
     }
 
     /// Runs the server, listening for incoming connections and handling them
+    ///
+    /// This method implements the main server loop that:
+    /// 1. Accepts new client connections
+    /// 2. Maintains a list of active clients
+    /// 3. Handles client messages in a round-robin fashion
+    /// 4. Removes disconnected clients
+    ///
+    /// # Returns
+    /// * `Ok(())` if server shutdown was clean
+    /// * `Err(...)` if a fatal error occurred
     pub fn run(&self) -> io::Result<()> {
         self.is_running.store(true, Ordering::SeqCst); // Set the server as running
         info!("Server is running on {}", self.listener.local_addr()?);
@@ -147,7 +199,6 @@ impl Server {
         while self.is_running.load(Ordering::SeqCst) {
             // 1) Accept new clients if available
             info!("Listening for new clients");
-            // println!("Listening for new clients");
             match self.listener.accept() {
                 Ok((stream, addr)) => {
                     info!("New client connected: {}", addr);
@@ -162,6 +213,7 @@ impl Server {
                     error!("Error accepting connection: {}", e);
                 }
             }
+
             // 2) Round-robin: handle each connected client once per iteration in single threaded approach (FIXED)
             let mut i = 0;
             while i < clients.len() {
@@ -194,6 +246,11 @@ impl Server {
     }
 
     /// Stops the server by setting the `is_running` flag to `false`
+    ///
+    /// This method provides a clean way to shut down the server:
+    /// 1. Checks if the server is currently running
+    /// 2. If running, sets the stop flag
+    /// 3. Logs the shutdown status
     pub fn stop(&self) {
         if self.is_running.load(Ordering::SeqCst) {
             self.is_running.store(false, Ordering::SeqCst);

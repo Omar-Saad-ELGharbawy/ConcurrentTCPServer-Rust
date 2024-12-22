@@ -5,7 +5,11 @@ use embedded_recruitment_task::{
 use std::{
     sync::Arc,
     thread::{self, JoinHandle},
+    time::Duration,
+
 };
+use rand::{thread_rng, Rng};
+
 // use log::{error, info, warn};
 use log::trace;
 
@@ -19,6 +23,12 @@ fn setup_server_thread(server: Arc<Server>) -> JoinHandle<()> {
 
 fn create_server() -> Arc<Server> {
     Arc::new(Server::new("localhost:8080").expect("Failed to start server"))
+}
+
+// Helper function to create a random delay
+fn random_delay(max_ms: u64) {
+    let mut rng = thread_rng();
+    thread::sleep(Duration::from_millis(rng.gen_range(0..max_ms)));
 }
 
 #[test]
@@ -319,5 +329,219 @@ fn test_client_add_request() {
     assert!(
         handle.join().is_ok(),
         "Server thread panicked or failed to join"
+    );
+}
+
+
+// New test cases
+
+#[test]
+fn test_concurrent_clients_in_threads() {
+    // Initialize logging (if not already done)
+    let _ = env_logger::try_init();
+    log::trace!("6 : test_concurrent_clients_in_threads Start.");
+
+    // 1. Spin up the server in its own thread
+    let server = create_server();
+    let handle = setup_server_thread(server.clone());
+
+    // 2. Configure concurrency: number of client threads, messages per client
+    let num_clients = 4;
+    let messages_per_client = 3;
+
+    // 3. Spawn multiple client threads
+    let mut client_threads = Vec::new();
+    for client_id in 0..num_clients {
+        client_threads.push(std::thread::spawn(move || {
+            log::trace!("Client {client_id} thread started.");
+
+            // a) Create & connect a client
+            let mut client = client::Client::new("localhost", 8080, 3000);
+            log::trace!("Client {client_id}: connecting to the server...");
+
+            assert!(
+                client.connect().is_ok(),
+                "Client {client_id} failed to connect in concurrency test"
+            );
+
+            // b) Send multiple messages, receive responses
+            for msg_index in 0..messages_per_client {
+                // Build an EchoMessage
+                let echo_content = format!("Client {client_id} - Message {msg_index}");
+                let mut echo_msg = EchoMessage::default();
+                echo_msg.content = echo_content.clone();
+
+                let send_msg = client_message::Message::EchoMessage(echo_msg);
+
+                // Log the outgoing message
+                log::trace!(
+                    "Client {client_id}: sending message {msg_index} => \"{}\"",
+                    echo_content
+                );
+
+                assert!(
+                    client.send(send_msg).is_ok(),
+                    "Client {client_id} failed to send message {msg_index}"
+                );
+
+                // Receive response
+                let response = client.receive();
+                log::trace!("Client {client_id}: received response => {:?}", response);
+
+                assert!(
+                    response.is_ok(),
+                    "Client {client_id} failed to receive echo for message {msg_index}"
+                );
+
+                match response.unwrap().message {
+                    Some(server_message::Message::EchoMessage(echo_resp)) => {
+                        // Confirm echo matches
+                        assert_eq!(
+                            echo_resp.content, echo_content,
+                            "Echo mismatch for client {client_id}, message {msg_index}"
+                        );
+                        log::trace!(
+                            "Client {client_id}, message {msg_index}: echo matched!"
+                        );
+                    }
+                    other => panic!(
+                        "Client {client_id} got unexpected response: {:?}",
+                        other
+                    ),
+                }
+            }
+
+            // c) Disconnect after sending all messages
+            log::trace!("Client {client_id}: disconnecting.");
+            assert!(
+                client.disconnect().is_ok(),
+                "Client {client_id} failed to disconnect"
+            );
+
+            log::trace!("Client {client_id} thread done.");
+        }));
+    }
+
+    // 4. Join all client threads
+    for (i, thread) in client_threads.into_iter().enumerate() {
+        thread
+            .join()
+            .expect(&format!("Client thread {} panicked", i));
+    }
+
+    // 5. Stop the server and join the server thread
+    server.stop();
+    assert!(
+        handle.join().is_ok(),
+        "Server thread panicked or failed to join in concurrency test"
+    );
+
+    log::trace!("test_concurrent_clients_in_threads complete.");
+}
+
+
+#[test]
+fn test_rapid_connect_disconnect() {
+    // activate logging
+    let _ = env_logger::try_init();
+    trace!("7 : test_rapid_connect_disconnect Start.");
+
+    let server = create_server();
+    let handle = setup_server_thread(server.clone());
+
+    let iterations = 10;
+    let client_count = 5;
+    let mut handles = Vec::new();
+
+    for _ in 0..client_count {
+        let handle = thread::spawn(move || {
+            for _ in 0..iterations {
+                let mut client = client::Client::new("localhost", 8080, 1000);
+                assert!(client.connect().is_ok());
+                random_delay(50); // Random delay up to 50ms
+                assert!(client.disconnect().is_ok());
+            }
+        });
+        handles.push(handle);
+    }
+
+    for handle in handles {
+        assert!(handle.join().is_ok());
+    }
+
+    server.stop();
+    assert!(handle.join().is_ok());
+}
+
+
+#[test]
+fn test_interleaved_echo_and_add() {
+    // activate logging
+    let _ = env_logger::try_init();
+    trace!("9 : test_interleaved_echo_and_add Start.");
+    log::trace!(": test_interleaved_echo_and_add Start.");
+
+    // 1. Spin up server
+    let server = create_server();
+    let handle = setup_server_thread(server.clone());
+
+    // 2. Create & connect single client
+    let mut client = client::Client::new("localhost", 8080, 3000);
+    assert!(client.connect().is_ok(), "Failed to connect for interleaved test");
+
+    // 3. Interleaved messages
+    //    We'll send: Echo("Test1"), Add(2+3), Echo("Test2"), Add(10+10)
+    let scenario = vec![
+        client_message::Message::EchoMessage(EchoMessage {
+            content: "Test1".to_string(),
+        }),
+        client_message::Message::AddRequest(AddRequest { a: 2, b: 3 }),
+        client_message::Message::EchoMessage(EchoMessage {
+            content: "Test2".to_string(),
+        }),
+        client_message::Message::AddRequest(AddRequest { a: 10, b: 10 }),
+    ];
+
+    // 4. For each message, check the correct server response
+    for msg in scenario {
+        let send_result = client.send(msg.clone());
+        assert!(send_result.is_ok(), "Failed to send interleaved message");
+
+        let response = client.receive();
+        assert!(response.is_ok(), "Failed to receive interleaved response");
+
+        match (msg, response.unwrap().message) {
+            (
+                client_message::Message::EchoMessage(sent),
+                Some(server_message::Message::EchoMessage(rcv)),
+            ) => {
+                assert_eq!(
+                    rcv.content, sent.content,
+                    "Echo content mismatch in interleaved test"
+                );
+            }
+            (
+                client_message::Message::AddRequest(sent),
+                Some(server_message::Message::AddResponse(rcv)),
+            ) => {
+                let expected = sent.a + sent.b;
+                assert_eq!(
+                    rcv.result, expected,
+                    "AddResponse mismatch in interleaved test"
+                );
+            }
+            // If we get here, the response type didn't match the request type
+            _ => panic!("Interleaved test got mismatched request/response types!"),
+        }
+    }
+
+    // 5. Disconnect
+    assert!(client.disconnect().is_ok(), "Failed to disconnect interleaved test");
+
+    // 6. Stop server
+    server.stop();
+    assert!(
+        handle.join().is_ok(),
+        "Server thread panicked or failed to join in interleaved test"
     );
 }

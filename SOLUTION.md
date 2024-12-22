@@ -12,5 +12,9 @@
 6. Started implementing the multi-threaded server in server_multithreadi.
 7. Added new test file client_test_multithreading to test the multi-threaded server.
 8. The multi-threaded server passes the tests and logs meaningful messages and seems to be faster than the single-threaded server and easier in handling multiple clients concurrently.
+9. Document the multi-threaded server and server files and genereting the documentation using ```cargo doc --document-private-items``` to document the private items as well.
+10. run ```cargo doc --open``` to open the documentation in the browser.
+
+.
 
 Here you can document all bugs and design flaws.
