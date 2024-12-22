@@ -2,7 +2,7 @@
 
 use embedded_recruitment_task::{
     // message::{client_message, server_message, AddRequest, EchoMessage},
-    server::Server,
+    multithreaded_server::Server,
 };
 
 fn main() {

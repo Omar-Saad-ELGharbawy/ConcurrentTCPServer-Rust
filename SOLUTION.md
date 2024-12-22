@@ -10,5 +10,7 @@
 5. Fixed the single threaded server to handle multiple clients by looping over the incoming connections and storing them in vector then handling them in a loop.
 
 6. Started implementing the multi-threaded server in server_multithreadi.
+7. Added new test file client_test_multithreading to test the multi-threaded server.
+8. The multi-threaded server passes the tests and logs meaningful messages and seems to be faster than the single-threaded server and easier in handling multiple clients concurrently.
 
 Here you can document all bugs and design flaws.
