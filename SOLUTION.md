@@ -1,20 +1,93 @@
 # Solution Steps
-1. cargo build to build project and convert messages.proto file into messages.rs
+1. Build the Project & Generate Protobuf Code
+
+- Run cargo build to compile the project and automatically convert messages.proto into messages.rs.
+- This ensures all Protobuf message definitions (e.g., EchoMessage, AddRequest) are up to date.
 2. Activate Logger 
-	1. Add  env_logger = "0.11.6" crate in cargo.toml file for log backend
-	2. Add let _ = env_logger::try_init(); in each test case to be sure to init logger
-	3. Write $env:RUST_LOG="trace"; in cmd to turn on all logging for the application
-3. Running tests using cargo test -- --test-threads=1 to run the tests using one thread not in parallel to prevent the tests and log messages from interfere with each other.
-4. Started analyzing the test logs and debugging the server code to find bugs and fix it as in [Bug Analysis and Fix Report](../Bug_Analysis_and_Fix_Report.md) .  
+- Add ``` env_logger = "0.11.6"``` crate in cargo.toml file for log backend
+- Add ```let _ = env_logger::try_init();``` in each test case to be sure to Initialize the logger
+- Set RUST_LOG environment variable for detailed logs:
+	- Write ```$env:RUST_LOG="trace";``` in cmd so you can see all trace-level logs in your console.
 
-5. Fixed the single threaded server to handle multiple clients by looping over the incoming connections and storing them in vector then handling them in a loop.
+3. Test Execution
+- Use : ```cargo test -- --test-threads=1```.
+- This runs tests sequentially (one thread), reducing log interference among tests.
+- Parallel logs from multiple tests can be interleaved, making debugging harder.
 
-6. Started implementing the multi-threaded server in server_multithreadi.
-7. Added new test file client_test_multithreading to test the multi-threaded server.
-8. The multi-threaded server passes the tests and logs meaningful messages and seems to be faster than the single-threaded server and easier in handling multiple clients concurrently.
-9. Document the multi-threaded server and server files and genereting the documentation using ```cargo doc --document-private-items``` to document the private items as well.
-10. run ```cargo doc --open``` to open the documentation in the browser.
+4. Bug Analysis and Fix 
+- Inspected test logs and debugged the server code to identify key issues.
+- Detailed findings are in [Bug Analysis and Fix Report](Reports/Bug_Analysis_and_Fix_Report.md).
+- This document outlines each discovered bug, its root cause, and the applied fix.
 
+5. Enhancing the Single-Threaded Server
+- Modified the existing server code to handle multiple clients by:
+	- Looping over all incoming connections (in non-blocking mode).
+	- Storing them in a ```Vec<Client>``` and iterating to serve each client in round-robin style.
+- This approach ensures basic concurrency in a single-thread environment (time-sliced handling of multiple clients).
+
+6. Implementing the Multi-Threaded Server
+- Created [multithreaded_server.rs](src/multithreaded_server.rs) to spawn dedicated threads for each client.
+- Each client’s connection runs in its own thread, improving responsiveness and concurrency compared to single-threaded.
+7. New Test File for Multithreading
+- Introduced [client_test_multithreading](tests/client_test_multithreading.rs) to verify the threaded server.
+- Validates concurrency scenarios (e.g., multiple clients sending messages in parallel).
+
+8. Performance & Observations
+- The multithreaded server passes all tests.
+- It is faster than single-threaded when handling multiple clients concurrently as noticed from test time. 
+
+9. Documentation Generation
+
+- Documented the multi-threaded server and server files using ```cargo doc --document-private-items```.
+- This command generates documentation for private items as well.
+- Use ```cargo doc --open --document-private-items``` to open the documentation in the browser or navigate to open the [index.html](target/doc/embedded_recruitment_task/multithreaded_server/index.html) file from target/doc/embedded_recruitment_task/multithreaded_server path.
+
+10. Additional Test Cases
+ - Added test cases for the server in the [Additional_Test_Cases_Report file](Reports/Additional_Test_Cases_Report.md ) .
+ - The added tests is in the below of the test cases files in the [client_test_multithreading](tests/client_test_multithreading.rs) and [client_test](tests/client_test.rs) files.
+
+11. Tests Evidence (Logs) 
+- Attached logs for both servers:
+	- [Single_Threaded_Server_Test_Evidence](Reports/Single_Threaded_Server_Test_Evidence.txt)
+	- [Multi_Threaded_Server_Test_Evidence](Reports/Multi_Threaded_Server_Test_Evidence.txt) .
+
+12.  Architectural Flaws & How They Were Addressed [Report](Reports/Architectural_Flaws.md)
+
+
+
+## Conclusion:
+
+With these steps, we have:
+
+- A single-threaded server capable of round-robin handling multiple clients.
+- A multithreaded server that runs each client in seperate thread.
+- Test evidence (logs) and bug fix documentation.
+- Updated documentation for code via cargo doc.
+
+
+## **Repository Structure**
+```plaintext
 .
-
-Here you can document all bugs and design flaws.
+├── proto/
+│   └── messages.proto                     # Protocol buffer file defining messages
+├── Reports/
+│   ├── Additional_Test_Cases_Report.md    # Report on additional test cases
+│   ├── Architectural_Flaws.md             # Analysis of architectural issues and its fixes
+│   ├── Bug_Analysis_and_Fix_Report.md     # Report on identified bugs and fixes
+│   ├── Multi_Threaded_Server_Test_Evidence.txt  # Logs Evidence of multi-threaded server tests
+│   └── Single_Threaded_Server_Test_Evidence.txt # Logs Evidence of single-threaded server tests
+├── src/
+│   ├── lib.rs                             # Core server logic
+│   ├── multithreaded_server.rs            # Multi-threaded server implementation
+│   └── server.rs                          # Single-threaded Server implementation
+├── tests/
+│   ├── client_test.rs                     # Test cases for the Single-threaded Server
+│   ├── client_test_multithreading.rs      # Test cases for the Multi-threaded Server
+│   └── client.rs                          # Client implementation
+├── target/                                # Compiled outputs and documentation
+├── build.rs                               # Build script for handling protocol 
+├── Cargo.lock                             # Dependency versions
+├── Cargo.toml                             # Rust package configuration
+├── README.md                              # Task instructions
+└── SOLUTION.md                            # Solution report 
+```

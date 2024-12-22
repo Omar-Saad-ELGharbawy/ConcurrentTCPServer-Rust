@@ -1,0 +1,337 @@
+Running tests\client_test.rs (target\debug\deps\client_test-d915d890b0c979e9.exe)
+
+running 8 tests
+test test_client_add_request ... [2024-12-22T05:27:15Z TRACE client_test] 5 : test_client_add_request Start.
+[2024-12-22T05:27:15Z INFO  embedded_recruitment_task::server] Server is running on [::1]:8080
+[2024-12-22T05:27:15Z INFO  embedded_recruitment_task::server] Listening for new clients
+[2024-12-22T05:27:15Z TRACE client_test] Client connected to the server.
+[2024-12-22T05:27:15Z INFO  embedded_recruitment_task::server] New client connected: [::1]:57588
+[2024-12-22T05:27:15Z TRACE client_test] Client send AddRequest message : AddRequest { a: 10, b: 20 } to the server.
+[2024-12-22T05:27:15Z INFO  client_test::client] Receiving message from the server
+[2024-12-22T05:27:15Z INFO  embedded_recruitment_task::server] Received AddRequest: a=10, b=20
+[2024-12-22T05:27:15Z INFO  client_test::client] Received 4 bytes from the server
+[2024-12-22T05:27:15Z TRACE client_test] Server responded with: Ok(ServerMessage { message: Some(AddResponse(AddResponse { result: 30 })) })
+[2024-12-22T05:27:15Z INFO  client_test::client] Disconnected from the server.
+[2024-12-22T05:27:15Z INFO  embedded_recruitment_task::server] Shutdown signal sent.
+[2024-12-22T05:27:15Z INFO  embedded_recruitment_task::server] Server stopped.
+ok
+test test_client_connection ... [2024-12-22T05:27:15Z TRACE client_test] 1 : test_client_connection Start.
+[2024-12-22T05:27:15Z INFO  embedded_recruitment_task::server] Server is running on [::1]:8080
+[2024-12-22T05:27:15Z INFO  client_test::client] Disconnected from the server.
+[2024-12-22T05:27:15Z INFO  embedded_recruitment_task::server] Listening for new clients
+[2024-12-22T05:27:15Z TRACE client_test] Client Disconnected from the server.
+[2024-12-22T05:27:15Z TRACE client_test] Stop the server.
+[2024-12-22T05:27:15Z INFO  embedded_recruitment_task::server] New client connected: [::1]:57589
+[2024-12-22T05:27:15Z INFO  embedded_recruitment_task::server] Shutdown signal sent.
+[2024-12-22T05:27:15Z INFO  embedded_recruitment_task::server] Buffer is Empty.
+[2024-12-22T05:27:15Z TRACE client_test] Waiting for Server to End.
+[2024-12-22T05:27:15Z INFO  embedded_recruitment_task::server] Client disconnected.
+[2024-12-22T05:27:15Z INFO  embedded_recruitment_task::server] Server stopped.
+ok
+test test_client_echo_message ... [2024-12-22T05:27:15Z TRACE client_test] 2 : test_client_echo_message Start.
+[2024-12-22T05:27:15Z INFO  embedded_recruitment_task::server] Server is running on [::1]:8080
+[2024-12-22T05:27:15Z INFO  client_test::client] Receiving message from the server
+[2024-12-22T05:27:15Z INFO  embedded_recruitment_task::server] Listening for new clients
+[2024-12-22T05:27:15Z INFO  embedded_recruitment_task::server] New client connected: [::1]:57590
+[2024-12-22T05:27:15Z INFO  embedded_recruitment_task::server] Received EchoMessage: Hello, World!
+[2024-12-22T05:27:15Z INFO  client_test::client] Received 17 bytes from the server
+[2024-12-22T05:27:15Z TRACE client_test] Server responded with: Ok(ServerMessage { message: Some(EchoMessage(EchoMessage { content: "Hello, World!" })) })
+[2024-12-22T05:27:15Z INFO  client_test::client] Disconnected from the server.
+[2024-12-22T05:27:15Z INFO  embedded_recruitment_task::server] Shutdown signal sent.
+[2024-12-22T05:27:15Z INFO  embedded_recruitment_task::server] Server stopped.
+ok
+test test_concurrent_clients_in_threads ... [2024-12-22T05:27:15Z TRACE client_test] 6 : test_concurrent_clients_in_threads Start.
+[2024-12-22T05:27:15Z TRACE client_test] Client 3 thread started.
+[2024-12-22T05:27:15Z TRACE client_test] Client 0 thread started.
+[2024-12-22T05:27:15Z TRACE client_test] Client 1 thread started.
+[2024-12-22T05:27:15Z TRACE client_test] Client 0: connecting to the server...
+[2024-12-22T05:27:15Z TRACE client_test] Client 3: connecting to the server...
+[2024-12-22T05:27:15Z TRACE client_test] Client 2 thread started.
+[2024-12-22T05:27:15Z INFO  embedded_recruitment_task::server] Server is running on [::1]:8080
+[2024-12-22T05:27:15Z TRACE client_test] Client 1: connecting to the server...
+[2024-12-22T05:27:15Z TRACE client_test] Client 3: sending message 0 => "Client 3 - Message 0"
+[2024-12-22T05:27:15Z TRACE client_test] Client 0: sending message 0 => "Client 0 - Message 0"
+[2024-12-22T05:27:15Z TRACE client_test] Client 2: connecting to the server...
+[2024-12-22T05:27:15Z INFO  embedded_recruitment_task::server] Listening for new clients
+[2024-12-22T05:27:15Z TRACE client_test] Client 1: sending message 0 => "Client 1 - Message 0"
+[2024-12-22T05:27:15Z INFO  client_test::client] Receiving message from the server
+[2024-12-22T05:27:15Z INFO  client_test::client] Receiving message from the server
+[2024-12-22T05:27:15Z TRACE client_test] Client 2: sending message 0 => "Client 2 - Message 0"
+[2024-12-22T05:27:15Z INFO  client_test::client] Receiving message from the server
+[2024-12-22T05:27:15Z INFO  embedded_recruitment_task::server] New client connected: [::1]:57591
+[2024-12-22T05:27:15Z INFO  client_test::client] Receiving message from the server
+[2024-12-22T05:27:15Z INFO  embedded_recruitment_task::server] Received EchoMessage: Client 0 - Message 0
+[2024-12-22T05:27:15Z INFO  client_test::client] Received 24 bytes from the server
+[2024-12-22T05:27:15Z TRACE client_test] Client 0: received response => Ok(ServerMessage { message: Some(EchoMessage(EchoMessage { content: "Client 0 - Message 0" })) })
+[2024-12-22T05:27:15Z TRACE client_test] Client 0, message 0: echo matched!
+[2024-12-22T05:27:15Z TRACE client_test] Client 0: sending message 1 => "Client 0 - Message 1"
+[2024-12-22T05:27:15Z INFO  client_test::client] Receiving message from the server
+[2024-12-22T05:27:15Z INFO  embedded_recruitment_task::server] Listening for new clients
+[2024-12-22T05:27:15Z INFO  embedded_recruitment_task::server] New client connected: [::1]:57592
+[2024-12-22T05:27:15Z INFO  embedded_recruitment_task::server] Received EchoMessage: Client 0 - Message 1
+[2024-12-22T05:27:15Z INFO  embedded_recruitment_task::server] Received EchoMessage: Client 3 - Message 0
+[2024-12-22T05:27:15Z INFO  client_test::client] Received 24 bytes from the server
+[2024-12-22T05:27:15Z INFO  client_test::client] Received 24 bytes from the server
+[2024-12-22T05:27:15Z TRACE client_test] Client 3: received response => Ok(ServerMessage { message: Some(EchoMessage(EchoMessage { content: "Client 3 - Message 0" })) })
+[2024-12-22T05:27:15Z TRACE client_test] Client 0: received response => Ok(ServerMessage { message: Some(EchoMessage(EchoMessage { content: "Client 0 - Message 1" })) })
+[2024-12-22T05:27:15Z TRACE client_test] Client 0, message 1: echo matched!
+[2024-12-22T05:27:15Z TRACE client_test] Client 3, message 0: echo matched!
+[2024-12-22T05:27:15Z TRACE client_test] Client 0: sending message 2 => "Client 0 - Message 2"
+[2024-12-22T05:27:15Z TRACE client_test] Client 3: sending message 1 => "Client 3 - Message 1"
+[2024-12-22T05:27:15Z INFO  client_test::client] Receiving message from the server
+[2024-12-22T05:27:15Z INFO  client_test::client] Receiving message from the server
+[2024-12-22T05:27:15Z INFO  embedded_recruitment_task::server] Listening for new clients
+[2024-12-22T05:27:15Z INFO  embedded_recruitment_task::server] New client connected: [::1]:57593
+[2024-12-22T05:27:15Z INFO  embedded_recruitment_task::server] Received EchoMessage: Client 0 - Message 2
+[2024-12-22T05:27:15Z INFO  embedded_recruitment_task::server] Received EchoMessage: Client 3 - Message 1
+[2024-12-22T05:27:15Z INFO  client_test::client] Received 24 bytes from the server
+[2024-12-22T05:27:15Z INFO  embedded_recruitment_task::server] Received EchoMessage: Client 1 - Message 0
+[2024-12-22T05:27:15Z TRACE client_test] Client 0: received response => Ok(ServerMessage { message: Some(EchoMessage(EchoMessage { content: "Client 0 - Message 2" })) })
+[2024-12-22T05:27:15Z INFO  client_test::client] Received 24 bytes from the server
+[2024-12-22T05:27:15Z INFO  client_test::client] Received 24 bytes from the server
+[2024-12-22T05:27:15Z TRACE client_test] Client 0, message 2: echo matched!
+[2024-12-22T05:27:15Z TRACE client_test] Client 3: received response => Ok(ServerMessage { message: Some(EchoMessage(EchoMessage { content: "Client 3 - Message 1" })) })
+[2024-12-22T05:27:15Z TRACE client_test] Client 1: received response => Ok(ServerMessage { message: Some(EchoMessage(EchoMessage { content: "Client 1 - Message 0" })) })
+[2024-12-22T05:27:15Z TRACE client_test] Client 3, message 1: echo matched!
+[2024-12-22T05:27:15Z TRACE client_test] Client 0: disconnecting.
+[2024-12-22T05:27:15Z TRACE client_test] Client 3: sending message 2 => "Client 3 - Message 2"
+[2024-12-22T05:27:15Z TRACE client_test] Client 1, message 0: echo matched!
+[2024-12-22T05:27:15Z INFO  client_test::client] Disconnected from the server.
+[2024-12-22T05:27:15Z TRACE client_test] Client 0 thread done.
+[2024-12-22T05:27:15Z TRACE client_test] Client 1: sending message 1 => "Client 1 - Message 1"
+[2024-12-22T05:27:15Z INFO  client_test::client] Receiving message from the server
+[2024-12-22T05:27:15Z INFO  client_test::client] Receiving message from the server
+[2024-12-22T05:27:15Z INFO  embedded_recruitment_task::server] Listening for new clients
+[2024-12-22T05:27:15Z INFO  embedded_recruitment_task::server] New client connected: [::1]:57594
+[2024-12-22T05:27:15Z INFO  embedded_recruitment_task::server] Buffer is Empty.
+[2024-12-22T05:27:15Z INFO  embedded_recruitment_task::server] Client disconnected.
+[2024-12-22T05:27:15Z INFO  embedded_recruitment_task::server] Listening for new clients
+[2024-12-22T05:27:15Z INFO  embedded_recruitment_task::server] Received EchoMessage: Client 3 - Message 2
+[2024-12-22T05:27:15Z INFO  embedded_recruitment_task::server] Received EchoMessage: Client 1 - Message 1
+[2024-12-22T05:27:15Z INFO  client_test::client] Received 24 bytes from the server
+[2024-12-22T05:27:15Z INFO  client_test::client] Received 24 bytes from the server
+[2024-12-22T05:27:15Z INFO  embedded_recruitment_task::server] Received EchoMessage: Client 2 - Message 0
+[2024-12-22T05:27:15Z TRACE client_test] Client 3: received response => Ok(ServerMessage { message: Some(EchoMessage(EchoMessage { content: "Client 3 - Message 2" })) })
+[2024-12-22T05:27:15Z TRACE client_test] Client 1: received response => Ok(ServerMessage { message: Some(EchoMessage(EchoMessage { content: "Client 1 - Message 1" })) })
+[2024-12-22T05:27:15Z INFO  client_test::client] Received 24 bytes from the server
+[2024-12-22T05:27:15Z TRACE client_test] Client 3, message 2: echo matched!
+[2024-12-22T05:27:15Z TRACE client_test] Client 1, message 1: echo matched!
+[2024-12-22T05:27:15Z TRACE client_test] Client 2: received response => Ok(ServerMessage { message: Some(EchoMessage(EchoMessage { content: "Client 2 - Message 0" })) })
+[2024-12-22T05:27:15Z TRACE client_test] Client 3: disconnecting.
+[2024-12-22T05:27:15Z TRACE client_test] Client 1: sending message 2 => "Client 1 - Message 2"
+[2024-12-22T05:27:15Z TRACE client_test] Client 2, message 0: echo matched!
+[2024-12-22T05:27:15Z INFO  client_test::client] Disconnected from the server.
+[2024-12-22T05:27:15Z INFO  client_test::client] Receiving message from the server
+[2024-12-22T05:27:15Z TRACE client_test] Client 2: sending message 1 => "Client 2 - Message 1"
+[2024-12-22T05:27:15Z TRACE client_test] Client 3 thread done.
+[2024-12-22T05:27:15Z INFO  client_test::client] Receiving message from the server
+[2024-12-22T05:27:15Z INFO  embedded_recruitment_task::server] Listening for new clients
+[2024-12-22T05:27:15Z INFO  embedded_recruitment_task::server] Buffer is Empty.
+[2024-12-22T05:27:15Z INFO  embedded_recruitment_task::server] Client disconnected.
+[2024-12-22T05:27:15Z INFO  embedded_recruitment_task::server] Listening for new clients
+[2024-12-22T05:27:15Z INFO  embedded_recruitment_task::server] Received EchoMessage: Client 1 - Message 2
+[2024-12-22T05:27:15Z INFO  client_test::client] Received 24 bytes from the server
+[2024-12-22T05:27:15Z INFO  embedded_recruitment_task::server] Received EchoMessage: Client 2 - Message 1
+[2024-12-22T05:27:15Z TRACE client_test] Client 1: received response => Ok(ServerMessage { message: Some(EchoMessage(EchoMessage { content: "Client 1 - Message 2" })) })
+[2024-12-22T05:27:15Z TRACE client_test] Client 1, message 2: echo matched!
+[2024-12-22T05:27:15Z INFO  client_test::client] Received 24 bytes from the server
+[2024-12-22T05:27:15Z TRACE client_test] Client 1: disconnecting.
+[2024-12-22T05:27:15Z TRACE client_test] Client 2: received response => Ok(ServerMessage { message: Some(EchoMessage(EchoMessage { content: "Client 2 - Message 1" })) })
+[2024-12-22T05:27:15Z INFO  client_test::client] Disconnected from the server.
+[2024-12-22T05:27:15Z TRACE client_test] Client 2, message 1: echo matched!
+[2024-12-22T05:27:15Z TRACE client_test] Client 1 thread done.
+[2024-12-22T05:27:15Z TRACE client_test] Client 2: sending message 2 => "Client 2 - Message 2"
+[2024-12-22T05:27:15Z INFO  client_test::client] Receiving message from the server
+[2024-12-22T05:27:16Z INFO  embedded_recruitment_task::server] Listening for new clients
+[2024-12-22T05:27:16Z INFO  embedded_recruitment_task::server] Buffer is Empty.
+[2024-12-22T05:27:16Z INFO  embedded_recruitment_task::server] Client disconnected.
+[2024-12-22T05:27:16Z INFO  embedded_recruitment_task::server] Listening for new clients
+[2024-12-22T05:27:16Z INFO  embedded_recruitment_task::server] Received EchoMessage: Client 2 - Message 2
+[2024-12-22T05:27:16Z INFO  client_test::client] Received 24 bytes from the server
+[2024-12-22T05:27:16Z TRACE client_test] Client 2: received response => Ok(ServerMessage { message: Some(EchoMessage(EchoMessage { content: "Client 2 - Message 2" })) })
+[2024-12-22T05:27:16Z TRACE client_test] Client 2, message 2: echo matched!
+[2024-12-22T05:27:16Z TRACE client_test] Client 2: disconnecting.
+[2024-12-22T05:27:16Z INFO  client_test::client] Disconnected from the server.
+[2024-12-22T05:27:16Z TRACE client_test] Client 2 thread done.
+[2024-12-22T05:27:16Z INFO  embedded_recruitment_task::server] Shutdown signal sent.
+[2024-12-22T05:27:16Z INFO  embedded_recruitment_task::server] Server stopped.
+[2024-12-22T05:27:16Z TRACE client_test] test_concurrent_clients_in_threads complete.
+ok
+test test_interleaved_echo_and_add ... [2024-12-22T05:27:16Z TRACE client_test] 9 : test_interleaved_echo_and_add Start.
+[2024-12-22T05:27:16Z TRACE client_test] : test_interleaved_echo_and_add Start.
+[2024-12-22T05:27:16Z INFO  embedded_recruitment_task::server] Server is running on [::1]:8080
+[2024-12-22T05:27:16Z INFO  client_test::client] Receiving message from the server
+[2024-12-22T05:27:16Z INFO  embedded_recruitment_task::server] Listening for new clients
+[2024-12-22T05:27:16Z INFO  embedded_recruitment_task::server] New client connected: [::1]:57595
+[2024-12-22T05:27:16Z INFO  embedded_recruitment_task::server] Received EchoMessage: Test1
+[2024-12-22T05:27:16Z INFO  client_test::client] Received 9 bytes from the server
+[2024-12-22T05:27:16Z INFO  client_test::client] Receiving message from the server
+[2024-12-22T05:27:16Z INFO  embedded_recruitment_task::server] Listening for new clients
+[2024-12-22T05:27:16Z INFO  embedded_recruitment_task::server] Received AddRequest: a=2, b=3
+[2024-12-22T05:27:16Z INFO  client_test::client] Received 4 bytes from the server
+[2024-12-22T05:27:16Z INFO  client_test::client] Receiving message from the server
+[2024-12-22T05:27:16Z INFO  embedded_recruitment_task::server] Listening for new clients
+[2024-12-22T05:27:16Z INFO  embedded_recruitment_task::server] Received EchoMessage: Test2
+[2024-12-22T05:27:16Z INFO  client_test::client] Received 9 bytes from the server
+[2024-12-22T05:27:16Z INFO  client_test::client] Receiving message from the server
+[2024-12-22T05:27:16Z INFO  embedded_recruitment_task::server] Listening for new clients
+[2024-12-22T05:27:16Z INFO  embedded_recruitment_task::server] Received AddRequest: a=10, b=10
+[2024-12-22T05:27:16Z INFO  client_test::client] Received 4 bytes from the server
+[2024-12-22T05:27:16Z INFO  client_test::client] Disconnected from the server.
+[2024-12-22T05:27:16Z INFO  embedded_recruitment_task::server] Shutdown signal sent.
+[2024-12-22T05:27:16Z INFO  embedded_recruitment_task::server] Server stopped.
+ok
+test test_multiple_clients ... [2024-12-22T05:27:16Z TRACE client_test] 4 : test_multiple_clients Start.
+[2024-12-22T05:27:16Z TRACE client_test] Connecting Clients.
+[2024-12-22T05:27:16Z INFO  embedded_recruitment_task::server] Server is running on [::1]:8080
+[2024-12-22T05:27:16Z INFO  embedded_recruitment_task::server] Listening for new clients
+[2024-12-22T05:27:16Z INFO  embedded_recruitment_task::server] New client connected: [::1]:57596
+[2024-12-22T05:27:16Z INFO  client_test::client] Receiving message from the server
+[2024-12-22T05:27:16Z INFO  embedded_recruitment_task::server] Listening for new clients
+[2024-12-22T05:27:16Z INFO  embedded_recruitment_task::server] New client connected: [::1]:57597
+[2024-12-22T05:27:16Z INFO  embedded_recruitment_task::server] Received EchoMessage: Hello, World!
+[2024-12-22T05:27:16Z INFO  client_test::client] Received 17 bytes from the server
+[2024-12-22T05:27:16Z INFO  client_test::client] Receiving message from the server
+[2024-12-22T05:27:16Z INFO  embedded_recruitment_task::server] Listening for new clients
+[2024-12-22T05:27:16Z INFO  embedded_recruitment_task::server] New client connected: [::1]:57598
+[2024-12-22T05:27:16Z INFO  embedded_recruitment_task::server] Received EchoMessage: Hello, World!
+[2024-12-22T05:27:16Z INFO  client_test::client] Received 17 bytes from the server
+[2024-12-22T05:27:16Z INFO  client_test::client] Receiving message from the server
+[2024-12-22T05:27:17Z INFO  embedded_recruitment_task::server] Listening for new clients
+[2024-12-22T05:27:17Z INFO  embedded_recruitment_task::server] Received EchoMessage: Hello, World!
+[2024-12-22T05:27:17Z INFO  client_test::client] Received 17 bytes from the server
+[2024-12-22T05:27:17Z INFO  client_test::client] Receiving message from the server
+[2024-12-22T05:27:17Z INFO  embedded_recruitment_task::server] Listening for new clients
+[2024-12-22T05:27:17Z INFO  embedded_recruitment_task::server] Received EchoMessage: How are you?
+[2024-12-22T05:27:17Z INFO  client_test::client] Received 16 bytes from the server
+[2024-12-22T05:27:17Z INFO  client_test::client] Receiving message from the server
+[2024-12-22T05:27:17Z INFO  embedded_recruitment_task::server] Listening for new clients
+[2024-12-22T05:27:17Z INFO  embedded_recruitment_task::server] Received EchoMessage: How are you?
+[2024-12-22T05:27:17Z INFO  client_test::client] Received 16 bytes from the server
+[2024-12-22T05:27:17Z INFO  client_test::client] Receiving message from the server
+[2024-12-22T05:27:17Z INFO  embedded_recruitment_task::server] Listening for new clients
+[2024-12-22T05:27:17Z INFO  embedded_recruitment_task::server] Received EchoMessage: How are you?
+[2024-12-22T05:27:17Z INFO  client_test::client] Received 16 bytes from the server
+[2024-12-22T05:27:17Z INFO  client_test::client] Receiving message from the server
+[2024-12-22T05:27:17Z INFO  embedded_recruitment_task::server] Listening for new clients
+[2024-12-22T05:27:17Z INFO  embedded_recruitment_task::server] Received EchoMessage: Goodbye!
+[2024-12-22T05:27:17Z INFO  client_test::client] Received 12 bytes from the server
+[2024-12-22T05:27:17Z INFO  client_test::client] Receiving message from the server
+[2024-12-22T05:27:17Z INFO  embedded_recruitment_task::server] Listening for new clients
+[2024-12-22T05:27:17Z INFO  embedded_recruitment_task::server] Received EchoMessage: Goodbye!
+[2024-12-22T05:27:17Z INFO  client_test::client] Received 12 bytes from the server
+[2024-12-22T05:27:17Z INFO  client_test::client] Receiving message from the server
+[2024-12-22T05:27:17Z INFO  embedded_recruitment_task::server] Listening for new clients
+[2024-12-22T05:27:18Z INFO  embedded_recruitment_task::server] Received EchoMessage: Goodbye!
+[2024-12-22T05:27:18Z INFO  client_test::client] Received 12 bytes from the server
+[2024-12-22T05:27:18Z INFO  client_test::client] Disconnected from the server.
+[2024-12-22T05:27:18Z INFO  client_test::client] Disconnected from the server.
+[2024-12-22T05:27:18Z INFO  client_test::client] Disconnected from the server.
+[2024-12-22T05:27:18Z INFO  embedded_recruitment_task::server] Shutdown signal sent.
+[2024-12-22T05:27:18Z INFO  embedded_recruitment_task::server] Server stopped.
+ok
+test test_multiple_echo_messages ... [2024-12-22T05:27:18Z TRACE client_test] 3 : test_multiple_echo_messages Start.
+[2024-12-22T05:27:18Z INFO  embedded_recruitment_task::server] Server is running on [::1]:8080
+[2024-12-22T05:27:18Z TRACE client_test] Messages will be sent : ["Hello, World!", "How are you?", "Goodbye!"]
+[2024-12-22T05:27:18Z INFO  embedded_recruitment_task::server] Listening for new clients
+[2024-12-22T05:27:18Z TRACE client_test] Send Message : EchoMessage(EchoMessage { content: "Hello, World!" })
+[2024-12-22T05:27:18Z INFO  embedded_recruitment_task::server] New client connected: [::1]:57599
+[2024-12-22T05:27:18Z INFO  client_test::client] Receiving message from the server
+[2024-12-22T05:27:18Z INFO  embedded_recruitment_task::server] Received EchoMessage: Hello, World!
+[2024-12-22T05:27:18Z INFO  client_test::client] Received 17 bytes from the server
+[2024-12-22T05:27:18Z TRACE client_test] Server responded with: Ok(ServerMessage { message: Some(EchoMessage(EchoMessage { content: "Hello, World!" })) })
+[2024-12-22T05:27:18Z TRACE client_test] Send Message : EchoMessage(EchoMessage { content: "How are you?" })
+[2024-12-22T05:27:18Z INFO  client_test::client] Receiving message from the server
+[2024-12-22T05:27:18Z INFO  embedded_recruitment_task::server] Listening for new clients
+[2024-12-22T05:27:18Z INFO  embedded_recruitment_task::server] Received EchoMessage: How are you?
+[2024-12-22T05:27:18Z INFO  client_test::client] Received 16 bytes from the server
+[2024-12-22T05:27:18Z TRACE client_test] Server responded with: Ok(ServerMessage { message: Some(EchoMessage(EchoMessage { content: "How are you?" })) })
+[2024-12-22T05:27:18Z TRACE client_test] Send Message : EchoMessage(EchoMessage { content: "Goodbye!" })
+[2024-12-22T05:27:18Z INFO  client_test::client] Receiving message from the server
+[2024-12-22T05:27:18Z INFO  embedded_recruitment_task::server] Listening for new clients
+[2024-12-22T05:27:18Z INFO  embedded_recruitment_task::server] Received EchoMessage: Goodbye!
+[2024-12-22T05:27:18Z INFO  client_test::client] Received 12 bytes from the server
+[2024-12-22T05:27:18Z TRACE client_test] Server responded with: Ok(ServerMessage { message: Some(EchoMessage(EchoMessage { content: "Goodbye!" })) })
+[2024-12-22T05:27:18Z INFO  client_test::client] Disconnected from the server.
+[2024-12-22T05:27:18Z INFO  embedded_recruitment_task::server] Shutdown signal sent.
+[2024-12-22T05:27:18Z INFO  embedded_recruitment_task::server] Server stopped.
+ok
+test test_rapid_connect_disconnect ... [2024-12-22T05:27:18Z TRACE client_test] 7 : test_rapid_connect_disconnect Start.
+[2024-12-22T05:27:18Z INFO  embedded_recruitment_task::server] Server is running on [::1]:8080
+[2024-12-22T05:27:18Z INFO  embedded_recruitment_task::server] Listening for new clients
+[2024-12-22T05:27:18Z INFO  embedded_recruitment_task::server] New client connected: [::1]:57601
+[2024-12-22T05:27:18Z INFO  client_test::client] Disconnected from the server.
+[2024-12-22T05:27:18Z INFO  client_test::client] Disconnected from the server.
+[2024-12-22T05:27:18Z INFO  client_test::client] Disconnected from the server.
+[2024-12-22T05:27:18Z INFO  client_test::client] Disconnected from the server.
+[2024-12-22T05:27:18Z INFO  client_test::client] Disconnected from the server.
+[2024-12-22T05:27:18Z INFO  client_test::client] Disconnected from the server.
+[2024-12-22T05:27:18Z INFO  client_test::client] Disconnected from the server.
+[2024-12-22T05:27:18Z INFO  client_test::client] Disconnected from the server.
+[2024-12-22T05:27:18Z INFO  client_test::client] Disconnected from the server.
+[2024-12-22T05:27:18Z INFO  client_test::client] Disconnected from the server.
+[2024-12-22T05:27:18Z INFO  client_test::client] Disconnected from the server.
+[2024-12-22T05:27:18Z INFO  embedded_recruitment_task::server] Listening for new clients
+[2024-12-22T05:27:18Z INFO  client_test::client] Disconnected from the server.
+[2024-12-22T05:27:18Z INFO  embedded_recruitment_task::server] New client connected: [::1]:57600
+[2024-12-22T05:27:18Z INFO  embedded_recruitment_task::server] Buffer is Empty.
+[2024-12-22T05:27:18Z INFO  embedded_recruitment_task::server] Client disconnected.
+[2024-12-22T05:27:18Z INFO  client_test::client] Disconnected from the server.
+[2024-12-22T05:27:18Z INFO  client_test::client] Disconnected from the server.
+[2024-12-22T05:27:18Z INFO  client_test::client] Disconnected from the server.
+[2024-12-22T05:27:18Z INFO  client_test::client] Disconnected from the server.
+[2024-12-22T05:27:18Z INFO  client_test::client] Disconnected from the server.
+[2024-12-22T05:27:18Z INFO  client_test::client] Disconnected from the server.
+[2024-12-22T05:27:18Z INFO  client_test::client] Disconnected from the server.
+[2024-12-22T05:27:18Z INFO  embedded_recruitment_task::server] Listening for new clients
+[2024-12-22T05:27:18Z INFO  embedded_recruitment_task::server] New client connected: [::1]:57602
+[2024-12-22T05:27:18Z INFO  embedded_recruitment_task::server] Buffer is Empty.
+[2024-12-22T05:27:18Z INFO  embedded_recruitment_task::server] Client disconnected.
+[2024-12-22T05:27:18Z INFO  client_test::client] Disconnected from the server.
+[2024-12-22T05:27:18Z INFO  client_test::client] Disconnected from the server.
+[2024-12-22T05:27:18Z INFO  client_test::client] Disconnected from the server.
+[2024-12-22T05:27:18Z INFO  client_test::client] Disconnected from the server.
+[2024-12-22T05:27:18Z INFO  client_test::client] Disconnected from the server.
+[2024-12-22T05:27:18Z INFO  client_test::client] Disconnected from the server.
+[2024-12-22T05:27:18Z INFO  client_test::client] Disconnected from the server.
+[2024-12-22T05:27:18Z INFO  client_test::client] Disconnected from the server.
+[2024-12-22T05:27:18Z INFO  client_test::client] Disconnected from the server.
+[2024-12-22T05:27:18Z INFO  client_test::client] Disconnected from the server.
+[2024-12-22T05:27:18Z INFO  client_test::client] Disconnected from the server.
+[2024-12-22T05:27:18Z INFO  client_test::client] Disconnected from the server.
+[2024-12-22T05:27:18Z INFO  embedded_recruitment_task::server] Listening for new clients
+[2024-12-22T05:27:18Z INFO  embedded_recruitment_task::server] New client connected: [::1]:57603
+[2024-12-22T05:27:18Z INFO  embedded_recruitment_task::server] Buffer is Empty.
+[2024-12-22T05:27:18Z INFO  client_test::client] Disconnected from the server.
+[2024-12-22T05:27:18Z INFO  embedded_recruitment_task::server] Client disconnected.
+[2024-12-22T05:27:18Z INFO  client_test::client] Disconnected from the server.
+[2024-12-22T05:27:18Z INFO  client_test::client] Disconnected from the server.
+[2024-12-22T05:27:18Z INFO  client_test::client] Disconnected from the server.
+[2024-12-22T05:27:18Z INFO  client_test::client] Disconnected from the server.
+[2024-12-22T05:27:18Z INFO  client_test::client] Disconnected from the server.
+[2024-12-22T05:27:18Z INFO  client_test::client] Disconnected from the server.
+[2024-12-22T05:27:18Z INFO  client_test::client] Disconnected from the server.
+[2024-12-22T05:27:18Z INFO  client_test::client] Disconnected from the server.
+[2024-12-22T05:27:18Z INFO  client_test::client] Disconnected from the server.
+[2024-12-22T05:27:18Z INFO  client_test::client] Disconnected from the server.
+[2024-12-22T05:27:18Z INFO  client_test::client] Disconnected from the server.
+[2024-12-22T05:27:18Z INFO  embedded_recruitment_task::server] Listening for new clients
+[2024-12-22T05:27:18Z INFO  embedded_recruitment_task::server] New client connected: [::1]:57604
+[2024-12-22T05:27:18Z INFO  embedded_recruitment_task::server] Buffer is Empty.
+[2024-12-22T05:27:18Z INFO  embedded_recruitment_task::server] Client disconnected.
+[2024-12-22T05:27:18Z INFO  client_test::client] Disconnected from the server.
+[2024-12-22T05:27:18Z INFO  client_test::client] Disconnected from the server.
+[2024-12-22T05:27:18Z INFO  client_test::client] Disconnected from the server.
+[2024-12-22T05:27:18Z INFO  client_test::client] Disconnected from the server.
+[2024-12-22T05:27:18Z INFO  client_test::client] Disconnected from the server.
+[2024-12-22T05:27:18Z INFO  client_test::client] Disconnected from the server.
+[2024-12-22T05:27:18Z INFO  embedded_recruitment_task::server] Listening for new clients
+[2024-12-22T05:27:18Z INFO  embedded_recruitment_task::server] New client connected: [::1]:57605
+[2024-12-22T05:27:18Z INFO  embedded_recruitment_task::server] Buffer is Empty.
+[2024-12-22T05:27:18Z INFO  embedded_recruitment_task::server] Client disconnected.
+[2024-12-22T05:27:18Z INFO  client_test::client] Disconnected from the server.
+[2024-12-22T05:27:18Z INFO  embedded_recruitment_task::server] Shutdown signal sent.
+[2024-12-22T05:27:18Z INFO  embedded_recruitment_task::server] Server stopped.
+ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 3.67s

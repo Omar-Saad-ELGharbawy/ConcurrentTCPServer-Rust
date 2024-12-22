@@ -1,0 +1,430 @@
+     Running tests\client_test_multithreading.rs (target\debug\deps\client_test_multithreading-d2fb30ca410b890e.exe)
+
+running 8 tests
+test test_client_add_request ... [2024-12-22T05:26:10Z TRACE client_test_multithreading] 5 : test_client_add_request Start.
+[2024-12-22T05:26:10Z INFO  embedded_recruitment_task::multithreaded_server] Server is running on [::1]:8080
+[2024-12-22T05:26:10Z TRACE client_test_multithreading] Client connected to the server.
+[2024-12-22T05:26:10Z INFO  embedded_recruitment_task::multithreaded_server] New client connected: [::1]:57495
+[2024-12-22T05:26:10Z TRACE client_test_multithreading] Client send AddRequest message : AddRequest { a: 10, b: 20 } to the server.
+[2024-12-22T05:26:10Z INFO  embedded_recruitment_task::multithreaded_server] Received AddRequest: a=10, b=20
+[2024-12-22T05:26:10Z INFO  client_test_multithreading::client] Receiving message from the server
+[2024-12-22T05:26:10Z INFO  client_test_multithreading::client] Received 4 bytes from the server
+[2024-12-22T05:26:10Z TRACE client_test_multithreading] Server responded with: Ok(ServerMessage { message: Some(AddResponse(AddResponse { result: 30 })) })
+[2024-12-22T05:26:10Z INFO  client_test_multithreading::client] Disconnected from the server.
+[2024-12-22T05:26:10Z INFO  embedded_recruitment_task::multithreaded_server] Client disconnected.
+[2024-12-22T05:26:10Z INFO  embedded_recruitment_task::multithreaded_server] Shutdown signal sent.
+[2024-12-22T05:26:10Z INFO  embedded_recruitment_task::multithreaded_server] Client [::1]:57495 disconnected.
+[2024-12-22T05:26:10Z INFO  embedded_recruitment_task::multithreaded_server] Server stopped.
+ok
+test test_client_connection ... [2024-12-22T05:26:11Z TRACE client_test_multithreading] 1 : test_client_connection Start.
+[2024-12-22T05:26:11Z INFO  client_test_multithreading::client] Disconnected from the server.
+[2024-12-22T05:26:11Z INFO  embedded_recruitment_task::multithreaded_server] Server is running on [::1]:8080
+[2024-12-22T05:26:11Z TRACE client_test_multithreading] Client Disconnected from the server.
+[2024-12-22T05:26:11Z INFO  embedded_recruitment_task::multithreaded_server] New client connected: [::1]:57496
+[2024-12-22T05:26:11Z INFO  embedded_recruitment_task::multithreaded_server] Client disconnected.
+[2024-12-22T05:26:11Z INFO  embedded_recruitment_task::multithreaded_server] Client [::1]:57496 disconnected.
+[2024-12-22T05:26:11Z TRACE client_test_multithreading] Stop the server.
+[2024-12-22T05:26:11Z INFO  embedded_recruitment_task::multithreaded_server] Shutdown signal sent.
+[2024-12-22T05:26:11Z TRACE client_test_multithreading] Waiting for Server to End.
+[2024-12-22T05:26:11Z INFO  embedded_recruitment_task::multithreaded_server] Server stopped.
+ok
+test test_client_echo_message ... [2024-12-22T05:26:11Z TRACE client_test_multithreading] 2 : test_client_echo_message Start.
+[2024-12-22T05:26:11Z INFO  client_test_multithreading::client] Receiving message from the server
+[2024-12-22T05:26:11Z INFO  embedded_recruitment_task::multithreaded_server] Server is running on [::1]:8080
+[2024-12-22T05:26:11Z INFO  embedded_recruitment_task::multithreaded_server] New client connected: [::1]:57498
+[2024-12-22T05:26:11Z INFO  embedded_recruitment_task::multithreaded_server] Received EchoMessage: Hello, World!
+[2024-12-22T05:26:11Z INFO  client_test_multithreading::client] Received 17 bytes from the server
+[2024-12-22T05:26:11Z TRACE client_test_multithreading] Server responded with: Ok(ServerMessage { message: Some(EchoMessage(EchoMessage { content: "Hello, World!" })) })
+[2024-12-22T05:26:11Z INFO  client_test_multithreading::client] Disconnected from the server.
+[2024-12-22T05:26:11Z INFO  embedded_recruitment_task::multithreaded_server] Shutdown signal sent.
+[2024-12-22T05:26:11Z INFO  embedded_recruitment_task::multithreaded_server] Server stopped.
+ok
+test test_concurrent_clients_in_threads ... [2024-12-22T05:26:11Z TRACE client_test_multithreading] 6 : test_concurrent_clients_in_threads Start.
+[2024-12-22T05:26:11Z INFO  embedded_recruitment_task::multithreaded_server] Server is running on [::1]:8080
+[2024-12-22T05:26:11Z TRACE client_test_multithreading] Client 0 thread started.
+[2024-12-22T05:26:11Z TRACE client_test_multithreading] Client 1 thread started.
+[2024-12-22T05:26:11Z TRACE client_test_multithreading] Client 2 thread started.
+[2024-12-22T05:26:11Z TRACE client_test_multithreading] Client 3 thread started.
+[2024-12-22T05:26:11Z TRACE client_test_multithreading] Client 0: connecting to the server...
+[2024-12-22T05:26:11Z TRACE client_test_multithreading] Client 1: connecting to the server...
+[2024-12-22T05:26:11Z TRACE client_test_multithreading] Client 3: connecting to the server...
+[2024-12-22T05:26:11Z TRACE client_test_multithreading] Client 2: connecting to the server...
+[2024-12-22T05:26:11Z TRACE client_test_multithreading] Client 1: sending message 0 => "Client 1 - Message 0"
+[2024-12-22T05:26:11Z INFO  client_test_multithreading::client] Receiving message from the server
+[2024-12-22T05:26:11Z TRACE client_test_multithreading] Client 3: sending message 0 => "Client 3 - Message 0"
+[2024-12-22T05:26:11Z TRACE client_test_multithreading] Client 0: sending message 0 => "Client 0 - Message 0"
+[2024-12-22T05:26:11Z TRACE client_test_multithreading] Client 2: sending message 0 => "Client 2 - Message 0"
+[2024-12-22T05:26:11Z INFO  client_test_multithreading::client] Receiving message from the server
+[2024-12-22T05:26:11Z INFO  client_test_multithreading::client] Receiving message from the server
+[2024-12-22T05:26:11Z INFO  client_test_multithreading::client] Receiving message from the server
+[2024-12-22T05:26:11Z INFO  embedded_recruitment_task::multithreaded_server] New client connected: [::1]:57500
+[2024-12-22T05:26:11Z INFO  embedded_recruitment_task::multithreaded_server] New client connected: [::1]:57501
+[2024-12-22T05:26:11Z INFO  embedded_recruitment_task::multithreaded_server] Received EchoMessage: Client 0 - Message 0
+[2024-12-22T05:26:11Z INFO  embedded_recruitment_task::multithreaded_server] Received EchoMessage: Client 1 - Message 0
+[2024-12-22T05:26:11Z INFO  client_test_multithreading::client] Received 24 bytes from the server
+[2024-12-22T05:26:11Z INFO  embedded_recruitment_task::multithreaded_server] New client connected: [::1]:57502
+[2024-12-22T05:26:11Z INFO  client_test_multithreading::client] Received 24 bytes from the server
+[2024-12-22T05:26:11Z TRACE client_test_multithreading] Client 0: received response => Ok(ServerMessage { message: Some(EchoMessage(EchoMessage { content: "Client 0 - Message 0" })) })
+[2024-12-22T05:26:11Z TRACE client_test_multithreading] Client 0, message 0: echo matched!
+[2024-12-22T05:26:11Z INFO  embedded_recruitment_task::multithreaded_server] New client connected: [::1]:57503
+[2024-12-22T05:26:11Z TRACE client_test_multithreading] Client 1: received response => Ok(ServerMessage { message: Some(EchoMessage(EchoMessage { content: "Client 1 - Message 0" })) })
+[2024-12-22T05:26:11Z INFO  embedded_recruitment_task::multithreaded_server] Received EchoMessage: Client 3 - Message 0
+[2024-12-22T05:26:11Z TRACE client_test_multithreading] Client 0: sending message 1 => "Client 0 - Message 1"
+[2024-12-22T05:26:11Z INFO  embedded_recruitment_task::multithreaded_server] Received EchoMessage: Client 2 - Message 0
+[2024-12-22T05:26:11Z TRACE client_test_multithreading] Client 1, message 0: echo matched!
+[2024-12-22T05:26:11Z INFO  client_test_multithreading::client] Receiving message from the server
+[2024-12-22T05:26:11Z INFO  client_test_multithreading::client] Received 24 bytes from the server
+[2024-12-22T05:26:11Z INFO  client_test_multithreading::client] Received 24 bytes from the server
+[2024-12-22T05:26:11Z TRACE client_test_multithreading] Client 1: sending message 1 => "Client 1 - Message 1"
+[2024-12-22T05:26:11Z TRACE client_test_multithreading] Client 3: received response => Ok(ServerMessage { message: Some(EchoMessage(EchoMessage { content: "Client 3 - Message 0" })) })
+[2024-12-22T05:26:11Z TRACE client_test_multithreading] Client 2: received response => Ok(ServerMessage { message: Some(EchoMessage(EchoMessage { content: "Client 2 - Message 0" })) })
+[2024-12-22T05:26:11Z INFO  client_test_multithreading::client] Receiving message from the server
+[2024-12-22T05:26:11Z TRACE client_test_multithreading] Client 3, message 0: echo matched!
+[2024-12-22T05:26:11Z TRACE client_test_multithreading] Client 2, message 0: echo matched!
+[2024-12-22T05:26:11Z TRACE client_test_multithreading] Client 2: sending message 1 => "Client 2 - Message 1"
+[2024-12-22T05:26:11Z TRACE client_test_multithreading] Client 3: sending message 1 => "Client 3 - Message 1"
+[2024-12-22T05:26:11Z INFO  client_test_multithreading::client] Receiving message from the server
+[2024-12-22T05:26:11Z INFO  client_test_multithreading::client] Receiving message from the server
+[2024-12-22T05:26:11Z INFO  embedded_recruitment_task::multithreaded_server] Received EchoMessage: Client 0 - Message 1
+[2024-12-22T05:26:11Z INFO  client_test_multithreading::client] Received 24 bytes from the server
+[2024-12-22T05:26:11Z INFO  embedded_recruitment_task::multithreaded_server] Received EchoMessage: Client 1 - Message 1
+[2024-12-22T05:26:11Z TRACE client_test_multithreading] Client 0: received response => Ok(ServerMessage { message: Some(EchoMessage(EchoMessage { content: "Client 0 - Message 1" })) })
+[2024-12-22T05:26:11Z INFO  client_test_multithreading::client] Received 24 bytes from the server
+[2024-12-22T05:26:11Z TRACE client_test_multithreading] Client 0, message 1: echo matched!
+[2024-12-22T05:26:11Z TRACE client_test_multithreading] Client 0: sending message 2 => "Client 0 - Message 2"
+[2024-12-22T05:26:11Z TRACE client_test_multithreading] Client 1: received response => Ok(ServerMessage { message: Some(EchoMessage(EchoMessage { content: "Client 1 - Message 1" })) })
+[2024-12-22T05:26:11Z INFO  embedded_recruitment_task::multithreaded_server] Received EchoMessage: Client 2 - Message 1
+[2024-12-22T05:26:11Z TRACE client_test_multithreading] Client 1, message 1: echo matched!
+[2024-12-22T05:26:11Z INFO  embedded_recruitment_task::multithreaded_server] Received EchoMessage: Client 3 - Message 1
+[2024-12-22T05:26:11Z TRACE client_test_multithreading] Client 1: sending message 2 => "Client 1 - Message 2"
+[2024-12-22T05:26:11Z INFO  client_test_multithreading::client] Receiving message from the server
+[2024-12-22T05:26:11Z INFO  client_test_multithreading::client] Received 24 bytes from the server
+[2024-12-22T05:26:11Z INFO  client_test_multithreading::client] Received 24 bytes from the server
+[2024-12-22T05:26:11Z INFO  client_test_multithreading::client] Receiving message from the server
+[2024-12-22T05:26:11Z TRACE client_test_multithreading] Client 2: received response => Ok(ServerMessage { message: Some(EchoMessage(EchoMessage { content: "Client 2 - Message 1" })) })
+[2024-12-22T05:26:11Z TRACE client_test_multithreading] Client 3: received response => Ok(ServerMessage { message: Some(EchoMessage(EchoMessage { content: "Client 3 - Message 1" })) })
+[2024-12-22T05:26:11Z TRACE client_test_multithreading] Client 2, message 1: echo matched!
+[2024-12-22T05:26:11Z TRACE client_test_multithreading] Client 3, message 1: echo matched!
+[2024-12-22T05:26:11Z TRACE client_test_multithreading] Client 2: sending message 2 => "Client 2 - Message 2"
+[2024-12-22T05:26:11Z TRACE client_test_multithreading] Client 3: sending message 2 => "Client 3 - Message 2"
+[2024-12-22T05:26:11Z INFO  client_test_multithreading::client] Receiving message from the server
+[2024-12-22T05:26:11Z INFO  client_test_multithreading::client] Receiving message from the server
+[2024-12-22T05:26:11Z INFO  embedded_recruitment_task::multithreaded_server] Received EchoMessage: Client 0 - Message 2
+[2024-12-22T05:26:11Z INFO  client_test_multithreading::client] Received 24 bytes from the server
+[2024-12-22T05:26:11Z TRACE client_test_multithreading] Client 0: received response => Ok(ServerMessage { message: Some(EchoMessage(EchoMessage { content: "Client 0 - Message 2" })) })
+[2024-12-22T05:26:11Z TRACE client_test_multithreading] Client 0, message 2: echo matched!
+[2024-12-22T05:26:11Z TRACE client_test_multithreading] Client 0: disconnecting.
+[2024-12-22T05:26:11Z INFO  embedded_recruitment_task::multithreaded_server] Received EchoMessage: Client 1 - Message 2
+[2024-12-22T05:26:11Z INFO  client_test_multithreading::client] Disconnected from the server.
+[2024-12-22T05:26:11Z TRACE client_test_multithreading] Client 0 thread done.
+[2024-12-22T05:26:11Z INFO  client_test_multithreading::client] Received 24 bytes from the server
+[2024-12-22T05:26:11Z TRACE client_test_multithreading] Client 1: received response => Ok(ServerMessage { message: Some(EchoMessage(EchoMessage { content: "Client 1 - Message 2" })) })
+[2024-12-22T05:26:11Z TRACE client_test_multithreading] Client 1, message 2: echo matched!
+[2024-12-22T05:26:11Z TRACE client_test_multithreading] Client 1: disconnecting.
+[2024-12-22T05:26:11Z INFO  embedded_recruitment_task::multithreaded_server] Received EchoMessage: Client 2 - Message 2
+[2024-12-22T05:26:11Z INFO  client_test_multithreading::client] Disconnected from the server.
+[2024-12-22T05:26:11Z INFO  embedded_recruitment_task::multithreaded_server] Received EchoMessage: Client 3 - Message 2
+[2024-12-22T05:26:11Z INFO  client_test_multithreading::client] Received 24 bytes from the server
+[2024-12-22T05:26:11Z TRACE client_test_multithreading] Client 1 thread done.
+[2024-12-22T05:26:11Z INFO  client_test_multithreading::client] Received 24 bytes from the server
+[2024-12-22T05:26:11Z TRACE client_test_multithreading] Client 2: received response => Ok(ServerMessage { message: Some(EchoMessage(EchoMessage { content: "Client 2 - Message 2" })) })
+[2024-12-22T05:26:11Z TRACE client_test_multithreading] Client 2, message 2: echo matched!
+[2024-12-22T05:26:11Z TRACE client_test_multithreading] Client 3: received response => Ok(ServerMessage { message: Some(EchoMessage(EchoMessage { content: "Client 3 - Message 2" })) })
+[2024-12-22T05:26:11Z TRACE client_test_multithreading] Client 2: disconnecting.
+[2024-12-22T05:26:11Z TRACE client_test_multithreading] Client 3, message 2: echo matched!
+[2024-12-22T05:26:11Z TRACE client_test_multithreading] Client 3: disconnecting.
+[2024-12-22T05:26:11Z INFO  client_test_multithreading::client] Disconnected from the server.
+[2024-12-22T05:26:11Z INFO  client_test_multithreading::client] Disconnected from the server.
+[2024-12-22T05:26:11Z TRACE client_test_multithreading] Client 2 thread done.
+[2024-12-22T05:26:11Z TRACE client_test_multithreading] Client 3 thread done.
+[2024-12-22T05:26:11Z INFO  embedded_recruitment_task::multithreaded_server] Shutdown signal sent.
+[2024-12-22T05:26:11Z INFO  embedded_recruitment_task::multithreaded_server] Server stopped.
+[2024-12-22T05:26:11Z TRACE client_test_multithreading] test_concurrent_clients_in_threads complete.
+ok
+test test_interleaved_echo_and_add ... [2024-12-22T05:26:11Z TRACE client_test_multithreading] 9 : test_interleaved_echo_and_add Start.
+[2024-12-22T05:26:11Z TRACE client_test_multithreading] : test_interleaved_echo_and_add Start.
+[2024-12-22T05:26:11Z INFO  embedded_recruitment_task::multithreaded_server] Server is running on [::1]:8080
+[2024-12-22T05:26:11Z INFO  client_test_multithreading::client] Receiving message from the server
+[2024-12-22T05:26:11Z INFO  embedded_recruitment_task::multithreaded_server] New client connected: [::1]:57504
+[2024-12-22T05:26:11Z INFO  embedded_recruitment_task::multithreaded_server] Received EchoMessage: Test1
+[2024-12-22T05:26:11Z INFO  client_test_multithreading::client] Received 9 bytes from the server
+[2024-12-22T05:26:11Z INFO  client_test_multithreading::client] Receiving message from the server
+[2024-12-22T05:26:11Z INFO  embedded_recruitment_task::multithreaded_server] Received AddRequest: a=2, b=3
+[2024-12-22T05:26:11Z INFO  client_test_multithreading::client] Received 4 bytes from the server
+[2024-12-22T05:26:11Z INFO  client_test_multithreading::client] Receiving message from the server
+[2024-12-22T05:26:11Z INFO  embedded_recruitment_task::multithreaded_server] Received EchoMessage: Test2
+[2024-12-22T05:26:11Z INFO  client_test_multithreading::client] Received 9 bytes from the server
+[2024-12-22T05:26:11Z INFO  client_test_multithreading::client] Receiving message from the server
+[2024-12-22T05:26:11Z INFO  embedded_recruitment_task::multithreaded_server] Received AddRequest: a=10, b=10
+[2024-12-22T05:26:11Z INFO  client_test_multithreading::client] Received 4 bytes from the server
+[2024-12-22T05:26:11Z INFO  client_test_multithreading::client] Disconnected from the server.
+[2024-12-22T05:26:11Z INFO  embedded_recruitment_task::multithreaded_server] Shutdown signal sent.
+[2024-12-22T05:26:11Z INFO  embedded_recruitment_task::multithreaded_server] Server stopped.
+ok
+test test_multiple_clients ... [2024-12-22T05:26:11Z TRACE client_test_multithreading] 4 : test_multiple_clients Start.
+[2024-12-22T05:26:11Z TRACE client_test_multithreading] Connecting Clients.
+[2024-12-22T05:26:11Z INFO  embedded_recruitment_task::multithreaded_server] Server is running on [::1]:8080
+[2024-12-22T05:26:11Z INFO  client_test_multithreading::client] Receiving message from the server
+[2024-12-22T05:26:11Z INFO  embedded_recruitment_task::multithreaded_server] New client connected: [::1]:57505
+[2024-12-22T05:26:11Z INFO  embedded_recruitment_task::multithreaded_server] Received EchoMessage: Hello, World!
+[2024-12-22T05:26:11Z INFO  embedded_recruitment_task::multithreaded_server] New client connected: [::1]:57506
+[2024-12-22T05:26:11Z INFO  client_test_multithreading::client] Received 17 bytes from the server
+[2024-12-22T05:26:11Z INFO  embedded_recruitment_task::multithreaded_server] New client connected: [::1]:57507
+[2024-12-22T05:26:11Z INFO  client_test_multithreading::client] Receiving message from the server
+[2024-12-22T05:26:11Z INFO  embedded_recruitment_task::multithreaded_server] Received EchoMessage: Hello, World!
+[2024-12-22T05:26:11Z INFO  client_test_multithreading::client] Received 17 bytes from the server
+[2024-12-22T05:26:11Z INFO  client_test_multithreading::client] Receiving message from the server
+[2024-12-22T05:26:11Z INFO  embedded_recruitment_task::multithreaded_server] Received EchoMessage: Hello, World!
+[2024-12-22T05:26:11Z INFO  client_test_multithreading::client] Received 17 bytes from the server
+[2024-12-22T05:26:11Z INFO  client_test_multithreading::client] Receiving message from the server
+[2024-12-22T05:26:11Z INFO  embedded_recruitment_task::multithreaded_server] Received EchoMessage: How are you?
+[2024-12-22T05:26:11Z INFO  client_test_multithreading::client] Received 16 bytes from the server
+[2024-12-22T05:26:11Z INFO  client_test_multithreading::client] Receiving message from the server
+[2024-12-22T05:26:11Z INFO  embedded_recruitment_task::multithreaded_server] Received EchoMessage: How are you?
+[2024-12-22T05:26:11Z INFO  client_test_multithreading::client] Received 16 bytes from the server
+[2024-12-22T05:26:11Z INFO  client_test_multithreading::client] Receiving message from the server
+[2024-12-22T05:26:11Z INFO  embedded_recruitment_task::multithreaded_server] Received EchoMessage: How are you?
+[2024-12-22T05:26:11Z INFO  client_test_multithreading::client] Received 16 bytes from the server
+[2024-12-22T05:26:11Z INFO  client_test_multithreading::client] Receiving message from the server
+[2024-12-22T05:26:11Z INFO  embedded_recruitment_task::multithreaded_server] Received EchoMessage: Goodbye!
+[2024-12-22T05:26:11Z INFO  client_test_multithreading::client] Received 12 bytes from the server
+[2024-12-22T05:26:11Z INFO  client_test_multithreading::client] Receiving message from the server
+[2024-12-22T05:26:11Z INFO  embedded_recruitment_task::multithreaded_server] Received EchoMessage: Goodbye!
+[2024-12-22T05:26:11Z INFO  client_test_multithreading::client] Received 12 bytes from the server
+[2024-12-22T05:26:11Z INFO  client_test_multithreading::client] Receiving message from the server
+[2024-12-22T05:26:11Z INFO  embedded_recruitment_task::multithreaded_server] Received EchoMessage: Goodbye!
+[2024-12-22T05:26:11Z INFO  client_test_multithreading::client] Received 12 bytes from the server
+[2024-12-22T05:26:11Z INFO  client_test_multithreading::client] Disconnected from the server.
+[2024-12-22T05:26:11Z INFO  client_test_multithreading::client] Disconnected from the server.
+[2024-12-22T05:26:11Z INFO  client_test_multithreading::client] Disconnected from the server.
+[2024-12-22T05:26:11Z INFO  embedded_recruitment_task::multithreaded_server] Shutdown signal sent.
+[2024-12-22T05:26:11Z INFO  embedded_recruitment_task::multithreaded_server] Server stopped.
+ok
+test test_multiple_echo_messages ... [2024-12-22T05:26:11Z TRACE client_test_multithreading] 3 : test_multiple_echo_messages Start.
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] Server is running on [::1]:8080
+[2024-12-22T05:26:12Z TRACE client_test_multithreading] Messages will be sent : ["Hello, World!", "How are you?", "Goodbye!"]
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] New client connected: [::1]:57508
+[2024-12-22T05:26:12Z TRACE client_test_multithreading] Send Message : EchoMessage(EchoMessage { content: "Hello, World!" })
+[2024-12-22T05:26:12Z INFO  client_test_multithreading::client] Receiving message from the server
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] Received EchoMessage: Hello, World!
+[2024-12-22T05:26:12Z INFO  client_test_multithreading::client] Received 17 bytes from the server
+[2024-12-22T05:26:12Z TRACE client_test_multithreading] Server responded with: Ok(ServerMessage { message: Some(EchoMessage(EchoMessage { content: "Hello, World!" })) })
+[2024-12-22T05:26:12Z TRACE client_test_multithreading] Send Message : EchoMessage(EchoMessage { content: "How are you?" })
+[2024-12-22T05:26:12Z INFO  client_test_multithreading::client] Receiving message from the server
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] Received EchoMessage: How are you?
+[2024-12-22T05:26:12Z INFO  client_test_multithreading::client] Received 16 bytes from the server
+[2024-12-22T05:26:12Z TRACE client_test_multithreading] Server responded with: Ok(ServerMessage { message: Some(EchoMessage(EchoMessage { content: "How are you?" })) 
+})
+[2024-12-22T05:26:12Z TRACE client_test_multithreading] Send Message : EchoMessage(EchoMessage { content: "Goodbye!" })
+[2024-12-22T05:26:12Z INFO  client_test_multithreading::client] Receiving message from the server
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] Received EchoMessage: Goodbye!
+[2024-12-22T05:26:12Z INFO  client_test_multithreading::client] Received 12 bytes from the server
+[2024-12-22T05:26:12Z TRACE client_test_multithreading] Server responded with: Ok(ServerMessage { message: Some(EchoMessage(EchoMessage { content: "Goodbye!" })) })  
+[2024-12-22T05:26:12Z INFO  client_test_multithreading::client] Disconnected from the server.
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] Shutdown signal sent.
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] Server stopped.
+ok
+test test_rapid_connect_disconnect ... [2024-12-22T05:26:12Z TRACE client_test_multithreading] 7 : test_rapid_connect_disconnect Start.
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] Server is running on [::1]:8080
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] New client connected: [::1]:57510
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] New client connected: [::1]:57511
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] New client connected: [::1]:57512
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] New client connected: [::1]:57513
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] New client connected: [::1]:57514
+[2024-12-22T05:26:12Z INFO  client_test_multithreading::client] Disconnected from the server.
+[2024-12-22T05:26:12Z INFO  client_test_multithreading::client] Disconnected from the server.
+[2024-12-22T05:26:12Z INFO  client_test_multithreading::client] Disconnected from the server.
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] Client disconnected.
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] Client [::1]:57511 disconnected.
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] Client disconnected.
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] Client [::1]:57512 disconnected.
+[2024-12-22T05:26:12Z INFO  client_test_multithreading::client] Disconnected from the server.
+[2024-12-22T05:26:12Z INFO  client_test_multithreading::client] Disconnected from the server.
+[2024-12-22T05:26:12Z INFO  client_test_multithreading::client] Disconnected from the server.
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] Client disconnected.
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] Client [::1]:57513 disconnected.
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] Client disconnected.
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] Client [::1]:57514 disconnected.
+[2024-12-22T05:26:12Z INFO  client_test_multithreading::client] Disconnected from the server.
+[2024-12-22T05:26:12Z INFO  client_test_multithreading::client] Disconnected from the server.
+[2024-12-22T05:26:12Z INFO  client_test_multithreading::client] Disconnected from the server.
+[2024-12-22T05:26:12Z INFO  client_test_multithreading::client] Disconnected from the server.
+[2024-12-22T05:26:12Z INFO  client_test_multithreading::client] Disconnected from the server.
+[2024-12-22T05:26:12Z INFO  client_test_multithreading::client] Disconnected from the server.
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] Client disconnected.
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] Client [::1]:57510 disconnected.
+[2024-12-22T05:26:12Z INFO  client_test_multithreading::client] Disconnected from the server.
+[2024-12-22T05:26:12Z INFO  client_test_multithreading::client] Disconnected from the server.
+[2024-12-22T05:26:12Z INFO  client_test_multithreading::client] Disconnected from the server.
+[2024-12-22T05:26:12Z INFO  client_test_multithreading::client] Disconnected from the server.
+[2024-12-22T05:26:12Z INFO  client_test_multithreading::client] Disconnected from the server.
+[2024-12-22T05:26:12Z INFO  client_test_multithreading::client] Disconnected from the server.
+[2024-12-22T05:26:12Z INFO  client_test_multithreading::client] Disconnected from the server.
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] New client connected: [::1]:57515
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] New client connected: [::1]:57516
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] Client disconnected.
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] New client connected: [::1]:57517
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] Client disconnected.
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] Client [::1]:57515 disconnected.
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] Client [::1]:57516 disconnected.
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] New client connected: [::1]:57518
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] Client disconnected.
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] Client disconnected.
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] Client [::1]:57517 disconnected.
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] New client connected: [::1]:57519
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] Client [::1]:57518 disconnected.
+[2024-12-22T05:26:12Z INFO  client_test_multithreading::client] Disconnected from the server.
+[2024-12-22T05:26:12Z INFO  client_test_multithreading::client] Disconnected from the server.
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] New client connected: [::1]:57520
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] Client disconnected.
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] New client connected: [::1]:57521
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] Client [::1]:57519 disconnected.
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] Client disconnected.
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] New client connected: [::1]:57522
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] Client disconnected.
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] Client [::1]:57520 disconnected.
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] New client connected: [::1]:57523
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] Client disconnected.
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] Client [::1]:57521 disconnected.
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] Client [::1]:57522 disconnected.
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] New client connected: [::1]:57524
+[2024-12-22T05:26:12Z INFO  client_test_multithreading::client] Disconnected from the server.
+[2024-12-22T05:26:12Z INFO  client_test_multithreading::client] Disconnected from the server.
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] New client connected: [::1]:57525
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] Client disconnected.
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] Client disconnected.
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] Client [::1]:57524 disconnected.
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] New client connected: [::1]:57526
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] Client disconnected.
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] Client [::1]:57523 disconnected.
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] Client [::1]:57525 disconnected.
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] Client disconnected.
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] New client connected: [::1]:57527
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] New client connected: [::1]:57528
+[2024-12-22T05:26:12Z INFO  client_test_multithreading::client] Disconnected from the server.
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] Client [::1]:57526 disconnected.
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] Client disconnected.
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] Client disconnected.
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] New client connected: [::1]:57529
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] Client [::1]:57528 disconnected.
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] Client [::1]:57527 disconnected.
+[2024-12-22T05:26:12Z INFO  client_test_multithreading::client] Disconnected from the server.
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] New client connected: [::1]:57530
+[2024-12-22T05:26:12Z INFO  client_test_multithreading::client] Disconnected from the server.
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] Client disconnected.
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] New client connected: [::1]:57531
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] Client [::1]:57529 disconnected.
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] Client disconnected.
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] New client connected: [::1]:57532
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] Client disconnected.
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] Client [::1]:57530 disconnected.
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] New client connected: [::1]:57533
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] Client [::1]:57531 disconnected.
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] Client disconnected.
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] New client connected: [::1]:57534
+[2024-12-22T05:26:12Z INFO  client_test_multithreading::client] Disconnected from the server.
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] New client connected: [::1]:57535
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] Client [::1]:57533 disconnected.
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] New client connected: [::1]:57536
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] Client disconnected.
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] New client connected: [::1]:57537
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] Client disconnected.
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] Client [::1]:57535 disconnected.
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] New client connected: [::1]:57538
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] Client disconnected.
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] Client [::1]:57536 disconnected.
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] New client connected: [::1]:57539
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] Client [::1]:57537 disconnected.
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] Client disconnected.
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] New client connected: [::1]:57540
+[2024-12-22T05:26:12Z INFO  client_test_multithreading::client] Disconnected from the server.
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] Client [::1]:57538 disconnected.
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] New client connected: [::1]:57541
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] New client connected: [::1]:57542
+[2024-12-22T05:26:12Z INFO  client_test_multithreading::client] Disconnected from the server.
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] Client disconnected.
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] Client [::1]:57532 disconnected.
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] Client disconnected.
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] Client [::1]:57534 disconnected.
+[2024-12-22T05:26:12Z INFO  client_test_multithreading::client] Disconnected from the server.
+[2024-12-22T05:26:12Z INFO  client_test_multithreading::client] Disconnected from the server.
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] Client disconnected.
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] Client disconnected.
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] Client [::1]:57539 disconnected.
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] Client [::1]:57542 disconnected.
+[2024-12-22T05:26:12Z INFO  client_test_multithreading::client] Disconnected from the server.
+[2024-12-22T05:26:12Z INFO  client_test_multithreading::client] Disconnected from the server.
+[2024-12-22T05:26:12Z INFO  client_test_multithreading::client] Disconnected from the server.
+[2024-12-22T05:26:12Z INFO  client_test_multithreading::client] Disconnected from the server.
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] Client disconnected.
+[2024-12-22T05:26:12Z INFO  client_test_multithreading::client] Disconnected from the server.
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] Client disconnected.
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] Client [::1]:57540 disconnected.
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] Client [::1]:57541 disconnected.
+[2024-12-22T05:26:12Z INFO  client_test_multithreading::client] Disconnected from the server.
+[2024-12-22T05:26:12Z INFO  client_test_multithreading::client] Disconnected from the server.
+[2024-12-22T05:26:12Z INFO  client_test_multithreading::client] Disconnected from the server.
+[2024-12-22T05:26:12Z INFO  client_test_multithreading::client] Disconnected from the server.
+[2024-12-22T05:26:12Z INFO  client_test_multithreading::client] Disconnected from the server.
+[2024-12-22T05:26:12Z INFO  client_test_multithreading::client] Disconnected from the server.
+[2024-12-22T05:26:12Z INFO  client_test_multithreading::client] Disconnected from the server.
+[2024-12-22T05:26:12Z INFO  client_test_multithreading::client] Disconnected from the server.
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] New client connected: [::1]:57543
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] New client connected: [::1]:57544
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] Client disconnected.
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] New client connected: [::1]:57545
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] Client disconnected.
+[2024-12-22T05:26:12Z INFO  client_test_multithreading::client] Disconnected from the server.
+[2024-12-22T05:26:12Z INFO  client_test_multithreading::client] Disconnected from the server.
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] Client [::1]:57543 disconnected.
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] Client disconnected.
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] Client [::1]:57544 disconnected.
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] New client connected: [::1]:57546
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] Client [::1]:57545 disconnected.
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] New client connected: [::1]:57547
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] Client disconnected.
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] New client connected: [::1]:57548
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] Client disconnected.
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] Client [::1]:57546 disconnected.
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] Client disconnected.
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] Client [::1]:57547 disconnected.
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] New client connected: [::1]:57549
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] Client [::1]:57548 disconnected.
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] New client connected: [::1]:57550
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] Client disconnected.
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] New client connected: [::1]:57551
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] Client disconnected.
+[2024-12-22T05:26:12Z INFO  client_test_multithreading::client] Disconnected from the server.
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] Client [::1]:57550 disconnected.
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] Client [::1]:57549 disconnected.
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] Client disconnected.
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] New client connected: [::1]:57552
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] Client [::1]:57551 disconnected.
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] Client disconnected.
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] New client connected: [::1]:57553
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] Client [::1]:57552 disconnected.
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] New client connected: [::1]:57554
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] Client disconnected.
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] Client [::1]:57553 disconnected.
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] New client connected: [::1]:57555
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] Client disconnected.
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] New client connected: [::1]:57556
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] Client [::1]:57554 disconnected.
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] Client disconnected.
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] New client connected: [::1]:57557
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] Client disconnected.
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] Client [::1]:57555 disconnected.
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] New client connected: [::1]:57558
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] Client [::1]:57556 disconnected.
+[2024-12-22T05:26:12Z INFO  client_test_multithreading::client] Disconnected from the server.
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] Client disconnected.
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] Client [::1]:57558 disconnected.
+[2024-12-22T05:26:12Z INFO  client_test_multithreading::client] Disconnected from the server.
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] Client disconnected.
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] Client [::1]:57557 disconnected.
+[2024-12-22T05:26:12Z INFO  client_test_multithreading::client] Disconnected from the server.
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] Shutdown signal sent.
+[2024-12-22T05:26:12Z INFO  embedded_recruitment_task::multithreaded_server] Server stopped.
+ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.42s
