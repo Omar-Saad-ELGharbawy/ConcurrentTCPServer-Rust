@@ -1,4 +1,12 @@
-use crate::message::EchoMessage;
+// use crate::message::EchoMessage;
+use crate::message::{
+    client_message,
+    server_message,
+    AddResponse,
+    // These are your generated Protobuf types
+    ClientMessage,
+    ServerMessage,
+};
 use log::{error, info, warn};
 use prost::Message;
 use std::{
@@ -26,8 +34,9 @@ impl Client {
 
         // Read data from the client
 
-        // Use a match to handle non-blocking I/O on Windows
+        // Use a match to handle non-blocking I/O on Windows (FIXED)
         match self.stream.read(&mut buffer) {
+            // (A) The client disconnected (0 bytes read)
             Ok(0) => {
                 /*
                 If the client has disconnected (read returned 0 bytes), we now return an error so the server loop breaks.
@@ -35,7 +44,7 @@ impl Client {
                 */
                 info!("Buffer is Empty.");
 
-                // Return an Err(...) so the server's inner loop sees an error and breaks out instead of continuing forever.
+                // Return an Err(...) so the server's inner loop sees an error and breaks out instead of continuing forever. (FIXED)
                 return Err(io::Error::new(
                     io::ErrorKind::ConnectionAborted,
                     "Client disconnected",
@@ -43,28 +52,62 @@ impl Client {
                 // Old Code
                 // return Ok(());
             }
-            // We successfully read bytes, attempt to decode
+            // (B) We successfully read bytes, attempt to decode (successful read)
             Ok(bytes_read) => {
-                if let Ok(message) = EchoMessage::decode(&buffer[..bytes_read]) {
-                    info!("Received: {}", message.content);
-                    println!("Received: {}", message.content);
-                    // Echo back the message
-                    let payload = message.encode_to_vec();
-                    self.stream.write_all(&payload)?;
-                    self.stream.flush()?;
-                } else {
-                    error!("Failed to decode message");
+                // 1. Decode the data as a `ClientMessage` instead of just `EchoMessage`. (FIXED)
+                match ClientMessage::decode(&buffer[..bytes_read]) {
+                    Ok(client_msg) => {
+                        // 2. Match on the `oneof` to see if it’s EchoMessage or AddRequest
+                        match client_msg.message {
+                            Some(client_message::Message::EchoMessage(echo)) => {
+                                info!("Received EchoMessage: {}", echo.content);
+                                // Build a ServerMessage with EchoMessage
+                                let response = ServerMessage {
+                                    message: Some(server_message::Message::EchoMessage(echo)),
+                                };
+                                // Encode and write the response back
+                                let payload = response.encode_to_vec();
+                                self.stream.write_all(&payload)?;
+                                self.stream.flush()?;
+                            }
+                            Some(client_message::Message::AddRequest(add_req)) => {
+                                info!("Received AddRequest: a={}, b={}", add_req.a, add_req.b);
+                                // Calculate the sum
+                                let sum = add_req.a + add_req.b;
+                                // Build a ServerMessage with AddResponse
+                                let response = ServerMessage {
+                                    message: Some(server_message::Message::AddResponse(
+                                        AddResponse { result: sum },
+                                    )),
+                                };
+                                // Encode and write the response back
+                                let payload = response.encode_to_vec();
+                                self.stream.write_all(&payload)?;
+                                self.stream.flush()?;
+                            }
+                            None => {
+                                // The oneof was empty - rare, but we can log and ignore
+                                error!("Received ClientMessage with no inner message.");
+                            }
+                        }
+                    }
+                    Err(e) => {
+                        // If decoding fails, log an error
+                        error!("Failed to decode ClientMessage: {}", e);
+                    }
                 }
+                // Return Ok after handling the message
                 Ok(())
             }
-            // If the socket would block, it means no data is ready yet.
-            // This is NOT a fatal error on a non-blocking socket.
+            // (C) If the socket would block, it means no data is ready yet.
+            // This is NOT a fatal error on a non-blocking socket. (FIXED)
             Err(ref e) if e.kind() == ErrorKind::WouldBlock => {
                 // No data available yet
                 // info!("No data available yet.");
                 // Return Ok(()) so the server can try again later
                 return Ok(());
             }
+            // (D) Other I/O errors
             Err(e) => {
                 error!("Failed to read from client: {}", e);
                 return Err(e);
@@ -108,7 +151,7 @@ impl Server {
             match self.listener.accept() {
                 Ok((stream, addr)) => {
                     info!("New client connected: {}", addr);
-                    // Push the new client into our collection
+                    // Push the new client into our collection (FIXED)
                     clients.push(Client::new(stream));
                 }
                 Err(ref e) if e.kind() == ErrorKind::WouldBlock => {
@@ -119,7 +162,7 @@ impl Server {
                     error!("Error accepting connection: {}", e);
                 }
             }
-            // 2) Round-robin: handle each connected client once per iteration in single threaded approach
+            // 2) Round-robin: handle each connected client once per iteration in single threaded approach (FIXED)
             let mut i = 0;
             while i < clients.len() {
                 if let Err(e) = clients[i].handle() {

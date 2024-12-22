@@ -263,8 +263,11 @@ fn test_multiple_clients() {
 }
 
 #[test]
-#[ignore = "please remove ignore and fix this test"]
+// #[ignore = "please remove ignore and fix this test"]
 fn test_client_add_request() {
+    // activate logging
+    let _ = env_logger::try_init();
+    trace!("5 : test_client_add_request Start.");
     // Set up the server in a separate thread
     let server = create_server();
     let handle = setup_server_thread(server.clone());
@@ -272,6 +275,7 @@ fn test_client_add_request() {
     // Create and connect the client
     let mut client = client::Client::new("localhost", 8080, 1000);
     assert!(client.connect().is_ok(), "Failed to connect to the server");
+    trace!("Client connected to the server.");
 
     // Prepare the message
     let mut add_request = AddRequest::default();
@@ -281,9 +285,15 @@ fn test_client_add_request() {
 
     // Send the message to the server
     assert!(client.send(message).is_ok(), "Failed to send message");
+    trace!(
+        "Client send AddRequest message : {:?} to the server.",
+        add_request
+    );
 
     // Receive the response
     let response = client.receive();
+    trace!("Server responded with: {:?}", response);
+
     assert!(
         response.is_ok(),
         "Failed to receive response for AddRequest"
