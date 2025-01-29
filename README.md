@@ -1,124 +1,120 @@
-# **Embedded Recruitment Task**
+# **Concurrent TCP Server - Rust**
+## Table of Contents
+
+- [Overview](#overview)
+- [Features](#features)
+- [Used Technologies](#used-technologies)
+- [Solution Steps](#solution-steps)
+  - [Bug Fixes & Debugging](#bug-fixes--debugging)
+  - [Implementing a Single-Threaded Round-Robin Server](#implementing-a-single-threaded-round-robin-server)
+  - [Developing a Multithreaded Server](#developing-a-multithreaded-server)
+  - [Concurrency Testing & Validation](#concurrency-testing--validation)
+  - [Performance Enhancements & Documentation](#performance-enhancements--documentation)
+- [Repository Structure](#repository-structure)
+- [Installation & Setup](#installation--setup)
+- [Conclusion](#conclusion)
+- [Future Enhancements](#future-enhancements)
+
+# **Rust Multithreaded Server**
 
 ## **Overview**
+This project is a **multithreaded server implemented in Rust** that efficiently handles multiple client connections concurrently. The server was originally a **buggy single-threaded** implementation, and I have successfully transitioned it into a robust, concurrent architecture utilizing Rust’s multithreading capabilities.
 
-Welcome to the **Embedded Recruitment Task**! This task is designed to assess your ability to analyze, debug, and enhance a server application written in Rust. The objective is to transition the server from a buggy, single-threaded implementation to a robust, multithreaded architecture capable of handling concurrent clients efficiently.
+This repository includes **the solution steps** detailing the debugging process, concurrency improvements, and architectural enhancements. See [`SOLUTION.md`](SOLUTION.md) for a step-by-step breakdown of the work done.
 
-## **Task Description**
+## **Features**
+- **Single-threaded and multithreaded server implementations**
+- **Efficient handling of multiple client connections**
+- **Thread-safe architecture using Rust’s concurrency primitives**
+- **Protobuf-based messaging protocol**
+- **Comprehensive test suite for both single-threaded and multithreaded servers**
 
-### **What You’ll Be Working On**
-You’ll be provided with:
-- A buggy, single-threaded Rust server implementation.
-- A client test suite to evaluate the server’s behavior.
+## **Used Technologies**
+- **Rust** for system programming
+- **Protobuf** for structured messaging
+- **Concurrency primitives** (Threads, Mutex, Channels) for safe multithreading
+- **Cargo** for package management
+- **Logging & debugging tools** for error tracing
 
-Your task:
-1. Debug and fix the existing server code.
-2. Transition the server from single-threaded to multithreaded.
-3. Enhance the server to handle multiple clients concurrently while maintaining data consistency.
-4. Use and extend the provided test suite to ensure the server meets all requirements.
+## **Solution Steps**
+For a detailed breakdown of the solution, refer to [`SOLUTION.md`](SOLUTION.md). Below is a summary of the key enhancements:
 
-### **Objectives**
-1. **Analyze the Existing Server Code:**
-   - Identify and fix intentional bugs in the provided implementation.
-   - Understand the limitations of the single-threaded architecture.
+### **Bug Fixes & Debugging**
+   - Identified and resolved issues in the initial server implementation.
+   - Used logging to trace errors and improve server reliability.
 
-2. **Transition to Multithreading:**
-   - Modify the server to handle multiple clients using Rust’s multithreading libs.
-   - Implement proper synchronization mechanisms to ensure thread safety.
+### **Implementing a Single-Threaded Round-Robin Server**
+   - Ensured the single-threaded server could handle multiple clients using a non-blocking loop.
+   - Implemented a round-robin strategy for handling requests.
 
-3. **Enhance Server Architecture:**
-   - Resolve any architectural flaws related to single-threaded assumptions.
-   - Optimize the server for scalability and concurrent request handling.
+### **Developing a Multithreaded Server**
+   - Created a separate module (`multithreaded_server.rs`) to implement client handling using **multiple threads**.
+   - Assigned **a dedicated thread to each client connection**, improving responsiveness and performance.
+   
+### **Concurrency Testing & Validation**
+   - Added a dedicated test suite (`client_test_multithreading.rs`) to evaluate the performance and stability of the multithreaded server.
+   - Verified that multiple clients can send and receive messages concurrently without race conditions.
 
-4. **Testing and Validation:**
-   - Run the provided test suite to verify functionality.
-   - Augment the test suite with additional test cases to cover edge cases and concurrency scenarios.
+### **Performance Enhancements & Documentation**
+   - Measured performance improvements over the single-threaded implementation.
+   - Documented findings and fixes in [`SOLUTION.md`](SOLUTION.md).
 
-5. **Demonstrate Code Quality:**
-   - Write clean, maintainable, and well-documented code.
-   - Provide comments and documentation to explain your changes.
-
-# Submission Instructions
-Once you have completed the task to the best of your ability:
-
-1. Prepare your solution, including:
-   - The updated server implementation.
-   - The test results and any additional test cases you added.
-   - Documentation (see the Deliverables section for details).
-2. Send your solution as a response to the recruitment email you received.
-   - Please ensure all required files are attached, or provide a link to a hosted repository (e.g., GitHub, GitLab) if your solution is hosted online.
-
-We understand the task may be challenging, and all solutions will be evaluated based on effort, approach, and quality. Even partial solutions that demonstrate thoughtful design and debugging skills are welcome.
-
-## **Requirements**
-
-### **Functional Requirements**
-- The server shall:
-  - Handle multiple clients concurrently.
-  - Maintain data consistency and avoid race conditions, deadlocks, and starvation.
-  - Log meaningful error messages and warnings.
-
-### **Technical Requirements**
-- Use Rust’s standard multithreading libraries or async runtime for concurrency.
-- Implement synchronization mechanisms to ensure thread safety.
-- Ensure the server adheres to performance requirements without unnecessary delays.
-
-## **Getting Started**
-
-### **Prerequisites**
-- Basic Rust knowledge [Rust book](https://doc.rust-lang.org/book/title-page.html)
-- Install Rust (latest stable version recommended). [Rust Installation Guide](https://www.rust-lang.org/tools/install)
-- Familiarity with Rust multithreading and asynchronous programming concepts. [Rust Concurrency](https://doc.rust-lang.org/book/ch16-00-concurrency.html)
-- Install protoc to compile a protobuf message [Protocol buffers](https://protobuf.dev/overview/)
-
-### **Repository Structure**
+## **Repository Structure**
 ```plaintext
 .
-|── proto/
-│   └── messages.proto        # IDL with messages server handle
+├── proto/
+│   └── messages.proto                     # Protocol buffer file defining messages
+├── Reports/
+│   ├── Bug_Analysis_and_Fix_Report.md     # Identified bugs and fixes
+│   ├── Architectural_Flaws.md              # Analysis of architectural issues and solutions
+│   ├── Multi_Threaded_Server_Test_Evidence.txt  # Logs for multi-threaded server
+│   ├── Single_Threaded_Server_Test_Evidence.txt # Logs for single-threaded server
+│   └── Additional_Test_Cases_Report.md     # Test cases added for validation
 ├── src/
-│   ├── main.rs               # Server implementation (single-threaded and buggy)
-│   └── lib.rs                # Core server logic
+│   ├── lib.rs                             # Core server logic
+│   ├── multithreaded_server.rs            # Multi-threaded server implementation
+│   └── server.rs                          # Single-threaded server implementation
 ├── tests/
-│   └── client_test.rs        # Client test suite
-├── .gitignore
-├── build.rs                  # Build script for compiling the Proto file
-├── Cargo.toml                # Rust dependencies and configuration
-├── README.md                 # Task instructions
-└── SOLUTION.md               # Place for your findings and analysis
+│   ├── client_test.rs                     # Tests for single-threaded server
+│   ├── client_test_multithreading.rs      # Tests for multi-threaded server
+│   ├── client.rs                          # Client implementation
+├── build.rs                               # Build script for Protobuf handling
+├── Cargo.toml                             # Rust package configuration
+├── README.md                              # Repository documentation
+├── SOLUTION.md                            # Detailed solution steps
+└── target/                                # Compiled outputs and documentation
 ```
 
-## Running Tests
+## **Installation & Setup**
+### **Prerequisites**
+- Rust (latest stable version recommended) – [Installation Guide](https://www.rust-lang.org/tools/install)
+- `protoc` (Protocol Buffers compiler) – [Protocol Buffers Guide](https://protobuf.dev/overview/)
 
-To run the provided test suite:
+### **Building the Project**
+```bash
+cargo build
+```
+This will compile the project and generate the required Protobuf message definitions.
 
+### **Running Tests**
+To test the implementation:
 ```bash
 cargo test
 ```
+To run tests sequentially (avoiding log interleaving issues):
+```bash
+cargo test -- --test-threads=1
+```
 
-## Deliverables
+## **Conclusion**
+This project demonstrates the **transition from a single-threaded server to a fully multithreaded concurrent server** in Rust. By addressing architectural flaws and implementing efficient concurrency mechanisms, the final solution achieves **scalability, thread safety, and improved performance**.
 
-1. Updated Server Implementation
-   - Fully functional server that adheres to the multithreading requirements.
-2. Test Suite Results
-   - Evidence (e.g., logs) that your server passes all tests.
-   - Any additional test cases you added to the test suite.
-3. Documentation:
-   - Inline comments in the code to explain significant changes.
-   - Bug Analysis and Fix Report
-4. A brief document outlining:
-   - The identified bugs in the initial implementation.
-   - How architectural flaws were addressed.
+For a deeper dive into the solution process, check out [`SOLUTION.md`](SOLUTION.md).
 
-## Evaluation Criteria
+---
+### 🚀 **Future Enhancements**
+- Implementing **async/await** for better efficiency.
+- Adding **load balancing** for client requests.
+- Further optimizing **thread pooling** using `tokio` or `rayon`.
 
-Your submission will be evaluated based on the following criteria:
-- **Correctness**: Does the updated server meet the functional and technical requirements?
-- **Bug Fixes**: How effectively were the provided bugs identified and resolved?
-- **Design Improvement**: Was the transition to multithreading executed appropriately? Were architectural flaws addressed?
-- **Testing**: Does the server pass all provided and additional tests? Are the new tests meaningful and comprehensive?
-- **Code Quality**: Is the code clean, maintainable, and well-documented?
-
-## Good Luck!
-
-We’re excited to see how you approach this task. If you have any questions or run into issues, don’t hesitate to reach out.
+Feel free to explore, contribute, or provide feedback!
