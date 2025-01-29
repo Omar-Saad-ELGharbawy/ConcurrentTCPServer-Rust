@@ -71,23 +71,22 @@ With these steps, we have:
 ├── proto/
 │   └── messages.proto                     # Protocol buffer file defining messages
 ├── Reports/
-│   ├── Additional_Test_Cases_Report.md    # Report on additional test cases
-│   ├── Architectural_Flaws.md             # Analysis of architectural issues and its fixes
-│   ├── Bug_Analysis_and_Fix_Report.md     # Report on identified bugs and fixes
-│   ├── Multi_Threaded_Server_Test_Evidence.txt  # Logs Evidence of multi-threaded server tests
-│   └── Single_Threaded_Server_Test_Evidence.txt # Logs Evidence of single-threaded server tests
+│   ├── Bug_Analysis_and_Fix_Report.md     # Identified bugs and fixes
+│   ├── Architectural_Flaws.md              # Analysis of architectural issues and solutions
+│   ├── Multi_Threaded_Server_Test_Evidence.txt  # Logs for multi-threaded server
+│   ├── Single_Threaded_Server_Test_Evidence.txt # Logs for single-threaded server
+│   └── Additional_Test_Cases_Report.md     # Test cases added for validation
 ├── src/
 │   ├── lib.rs                             # Core server logic
 │   ├── multithreaded_server.rs            # Multi-threaded server implementation
-│   └── server.rs                          # Single-threaded Server implementation
+│   └── server.rs                          # Single-threaded server implementation
 ├── tests/
-│   ├── client_test.rs                     # Test cases for the Single-threaded Server
-│   ├── client_test_multithreading.rs      # Test cases for the Multi-threaded Server
-│   └── client.rs                          # Client implementation
-├── target/                                # Compiled outputs and documentation
-├── build.rs                               # Build script for handling protocol 
-├── Cargo.lock                             # Dependency versions
+│   ├── client_test.rs                     # Tests for single-threaded server
+│   ├── client_test_multithreading.rs      # Tests for multi-threaded server
+│   ├── client.rs                          # Client implementation
+├── build.rs                               # Build script for Protobuf handling
 ├── Cargo.toml                             # Rust package configuration
-├── README.md                              # Task instructions
-└── SOLUTION.md                            # Solution report 
+├── README.md                              # Repository documentation
+├── SOLUTION.md                            # Detailed solution steps
+└── target/                                # Compiled outputs and documentation
 ```
